@@ -1,0 +1,16 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../client"
+}
+
+model DiscoverTopic {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  score     Float    @default(0)
+  updatedAt DateTime @updatedAt
+}

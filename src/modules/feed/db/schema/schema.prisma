@@ -1,0 +1,19 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["feed"]
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+  output   = "../client"
+}
+
+model FeedConfig {
+  userId    String   @id
+  algorithm String   @default("default")
+  updatedAt DateTime @updatedAt
+
+  @@schema("feed")
+}

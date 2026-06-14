@@ -1,0 +1,15 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../client"
+}
+
+model FeedConfig {
+  userId    String   @id
+  algorithm String   @default("default")
+  updatedAt DateTime @updatedAt
+}
