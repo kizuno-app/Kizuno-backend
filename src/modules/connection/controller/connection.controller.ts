@@ -8,6 +8,10 @@ export class ConnectionController {
       const followerId = req.user?.userId;
       const followingId = req.params.userId as string;
 
+      if (req.user?.role === 'ORGANIZATION') {
+        throw { statusCode: 403, message: 'Organizations cannot follow other accounts' };
+      }
+
       if (!followerId || !followingId) {
         throw { statusCode: 400, message: 'Invalid request' };
       }
@@ -23,6 +27,10 @@ export class ConnectionController {
     try {
       const followerId = req.user?.userId;
       const followingId = req.params.userId as string;
+
+      if (req.user?.role === 'ORGANIZATION') {
+        throw { statusCode: 403, message: 'Organizations cannot follow or unfollow accounts' };
+      }
 
       if (!followerId || !followingId) {
         throw { statusCode: 400, message: 'Invalid request' };

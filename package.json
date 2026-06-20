@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
-    "build": "tsc",
-    "prisma:generate": "npx prisma generate --schema=src/modules/auth/db/schema/schema.prisma && npx prisma generate --schema=src/modules/user/db/schema/schema.prisma && npx prisma generate --schema=src/modules/post/db/schema/schema.prisma && npx prisma generate --schema=src/modules/feed/db/schema/schema.prisma && npx prisma generate --schema=src/modules/connection/db/schema/schema.prisma && npx prisma generate --schema=src/modules/chat/db/schema/schema.prisma && npx prisma generate --schema=src/modules/notification/db/schema/schema.prisma && npx prisma generate --schema=src/modules/discover/db/schema/schema.prisma"
+    "build": "tsc && node copy-clients.js",
+    "prisma:generate": "npx prisma generate --schema=src/modules/auth/db/schema/schema.prisma && npx prisma generate --schema=src/modules/user/db/schema/schema.prisma && npx prisma generate --schema=src/modules/post/db/schema/schema.prisma && npx prisma generate --schema=src/modules/feed/db/schema/schema.prisma && npx prisma generate --schema=src/modules/connection/db/schema/schema.prisma && npx prisma generate --schema=src/modules/chat/db/schema/schema.prisma && npx prisma generate --schema=src/modules/notification/db/schema/schema.prisma && npx prisma generate --schema=src/modules/discover/db/schema/schema.prisma && npx prisma generate --schema=src/modules/organization/db/schema/schema.prisma && npx prisma generate --schema=src/modules/report/db/schema/schema.prisma && npx prisma generate --schema=src/modules/email/db/schema/schema.prisma"
   },
   "keywords": [],
   "author": "",
@@ -30,6 +30,7 @@
     "libsodium-wrappers": "^0.8.4",
     "multer": "^2.1.1",
     "prisma": "^5.22.0",
+    "resend": "^6.12.4",
     "socket.io": "^4.8.3",
     "zod": "^4.4.3"
   },

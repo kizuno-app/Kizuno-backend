@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { UserService } from '../services/user.service';
 import { UpdateProfileDto } from '../dto/user.dto';
 import { ConnectionService } from '../../connection/services/connection.service';
+import { OrganizationService } from '../../organization/services/organization.service';
 import { cloudinary } from '../../../shared/cloudinary';
 
 export class UserController {
@@ -33,10 +34,20 @@ export class UserController {
       if (req.user?.userId && req.user.userId !== userId) {
         isFollowing = await ConnectionService.checkIsFollowing(req.user.userId, userId).catch(() => false);
       }
+
+      // Enrich with organization metadata if this is an org account
+      let organization = null;
+      if (profile.organizationId) {
+        try {
+          organization = await OrganizationService.getById(profile.organizationId);
+        } catch (e) {
+          // Org record may not exist yet, that's fine
+        }
+      }
       
       res.status(200).json({ 
         status: 'success', 
-        data: { ...profile, followersCount, followingCount, isFollowing } 
+        data: { ...profile, followersCount, followingCount, isFollowing, organization } 
       });
     } catch (error) {
       next(error);
@@ -88,7 +99,7 @@ export class UserController {
       const streamUpload = () => {
         return new Promise((resolve, reject) => {
           const stream = cloudinary.uploader.upload_stream(
-            { folder },
+            { folder, resource_type: 'auto' },
             (error, result) => {
               if (result) resolve(result);
               else reject(error);
@@ -100,6 +111,15 @@ export class UserController {
 
       const result: any = await streamUpload();
       res.status(200).json({ status: 'success', data: { url: result.secure_url } });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async getTrendingOrgAccounts(req: Request, res: Response, next: NextFunction) {
+    try {
+      const orgAccounts = await UserService.getTrendingOrgAccounts();
+      res.status(200).json({ status: 'success', data: orgAccounts });
     } catch (error) {
       next(error);
     }

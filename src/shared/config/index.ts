@@ -18,4 +18,18 @@ export const config = {
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
   },
   clientUrl: process.env.CLIENT_URL || 'http://localhost:3000',
+  email: {
+    resendApiKey: process.env.RESEND_API_KEY || '',
+    mailReplyTo: process.env.MAIL_REPLY_TO || 'support@kizuna.app',
+    fromAuth: process.env.MAIL_FROM_AUTH || 'Kizuna Auth <noreply@auth.kizuna.app>',
+    fromOrg: process.env.MAIL_FROM_ORG || 'Kizuna Org <onboarding@org.kizuna.app>',
+    fromSecurity: process.env.MAIL_FROM_SECURITY || 'Kizuna Security <security@auth.kizuna.app>',
+    fromGeneral: process.env.MAIL_FROM_GENERAL || 'Kizuna <hello@kizuna.app>',
+    verificationTokenExpiry: 24 * 60 * 60 * 1000,  // 24 hours in ms
+    passwordResetTokenExpiry: 60 * 60 * 1000,       // 1 hour in ms
+    otpExpiry: 10 * 60,                              // 10 minutes in seconds (Redis TTL)
+    otpResendCooldown: 60,                           // 60 seconds
+    verificationResendCooldown: 60,                  // 60 seconds
+    passwordResetCooldown: 60,                       // 60 seconds
+  },
 };

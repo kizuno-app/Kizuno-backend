@@ -62,6 +62,7 @@ export class NotificationService {
       let actor = null;
       let commentText = null;
       let postId = null;
+      let postObj = null;
 
       try {
         const { UserService } = require('../../user/services/user.service');
@@ -85,6 +86,51 @@ export class NotificationService {
         }
       } else if (n.type === NotificationType.LIKE_POST && n.entityId) {
         postId = n.entityId;
+      } else if (n.type === NotificationType.REPOST_POST && n.entityId) {
+        try {
+          const { PostService } = require('../../post/services/post.service');
+          const repostPost = await PostService.getPost(n.entityId);
+          postId = repostPost.id;
+          if (repostPost.repostOfId) {
+            const originalPost = await PostService.getPost(repostPost.repostOfId);
+            commentText = originalPost.content;
+          }
+        } catch (err) {
+          // Ignore
+        }
+      } else if (n.type === NotificationType.QUOTE_POST && n.entityId) {
+        try {
+          const { PostService } = require('../../post/services/post.service');
+          const { UserService } = require('../../user/services/user.service');
+          const post = await PostService.getPost(n.entityId);
+          const author = await UserService.getProfile(post.userId).catch(() => null);
+          const isLiked = await PostService.hasLiked(userId, post.id).catch(() => false);
+          const isReposted = await PostService.hasReposted(userId, post.id).catch(() => false);
+          const isShared = await PostService.hasShared(userId, post.id).catch(() => false);
+
+          let repostOf = null;
+          if (post.repostOfId) {
+            try {
+              const originalPost = await PostService.getRepostOf(post.repostOfId);
+              if (originalPost) {
+                const originalAuthor = await UserService.getProfile(originalPost.userId).catch(() => null);
+                repostOf = { ...originalPost, author: originalAuthor };
+              }
+            } catch { /* original post may have been deleted */ }
+          }
+
+          postObj = {
+            ...post,
+            author,
+            isLiked,
+            isReposted,
+            isShared,
+            repostOf,
+          };
+          postId = post.id;
+        } catch (err) {
+          // Ignore
+        }
       }
 
       enriched.push({
@@ -92,6 +138,7 @@ export class NotificationService {
         actor,
         commentText,
         postId,
+        post: postObj,
       });
     }
 

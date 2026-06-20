@@ -6,7 +6,7 @@ class EventBus extends EventEmitter {
   private constructor() {
     super();
     // Increase limit if many modules subscribe to the same event
-    this.setMaxListeners(20); 
+    this.setMaxListeners(30); 
   }
 
   public static getInstance(): EventBus {
@@ -39,8 +39,22 @@ export const CoreEvents = {
   POST_LIKED: 'POST_LIKED',
   POST_COMMENTED: 'POST_COMMENTED',
   POST_SHARED: 'POST_SHARED',
+  POST_REPOSTED: 'POST_REPOSTED',
   USER_FOLLOWED: 'USER_FOLLOWED',
   USER_UNFOLLOWED: 'USER_UNFOLLOWED',
   MESSAGE_SENT: 'MESSAGE_SENT',
   NOTIFICATION_CREATED: 'NOTIFICATION_CREATED',
+
+  // Email Events
+  EMAIL_VERIFICATION_REQUESTED: 'EMAIL_VERIFICATION_REQUESTED',
+  PASSWORD_RESET_REQUESTED: 'PASSWORD_RESET_REQUESTED',
+  PASSWORD_CHANGED: 'PASSWORD_CHANGED',
+  WELCOME_EMAIL_REQUESTED: 'WELCOME_EMAIL_REQUESTED',
+  SECURITY_ALERT: 'SECURITY_ALERT',
+  OTP_REQUESTED: 'OTP_REQUESTED',
+
+  // Organization Email Events
+  ORG_APPLICATION_SUBMITTED: 'ORG_APPLICATION_SUBMITTED',
+  ORG_APPROVED: 'ORG_APPROVED',
+  ORG_REJECTED: 'ORG_REJECTED',
 } as const;

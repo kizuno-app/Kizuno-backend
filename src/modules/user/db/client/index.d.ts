@@ -876,6 +876,11 @@ export namespace Prisma {
     college: string | null
     branch: string | null
     year: number | null
+    organizationId: string | null
+    organizationRole: string | null
+    joinedOrgAt: Date | null
+    isOrgAccount: boolean | null
+    verified: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -893,6 +898,11 @@ export namespace Prisma {
     college: string | null
     branch: string | null
     year: number | null
+    organizationId: string | null
+    organizationRole: string | null
+    joinedOrgAt: Date | null
+    isOrgAccount: boolean | null
+    verified: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -911,6 +921,11 @@ export namespace Prisma {
     college: number
     branch: number
     year: number
+    organizationId: number
+    organizationRole: number
+    joinedOrgAt: number
+    isOrgAccount: number
+    verified: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -938,6 +953,11 @@ export namespace Prisma {
     college?: true
     branch?: true
     year?: true
+    organizationId?: true
+    organizationRole?: true
+    joinedOrgAt?: true
+    isOrgAccount?: true
+    verified?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -955,6 +975,11 @@ export namespace Prisma {
     college?: true
     branch?: true
     year?: true
+    organizationId?: true
+    organizationRole?: true
+    joinedOrgAt?: true
+    isOrgAccount?: true
+    verified?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -973,6 +998,11 @@ export namespace Prisma {
     college?: true
     branch?: true
     year?: true
+    organizationId?: true
+    organizationRole?: true
+    joinedOrgAt?: true
+    isOrgAccount?: true
+    verified?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1078,6 +1108,11 @@ export namespace Prisma {
     college: string | null
     branch: string | null
     year: number | null
+    organizationId: string | null
+    organizationRole: string | null
+    joinedOrgAt: Date | null
+    isOrgAccount: boolean
+    verified: boolean
     createdAt: Date
     updatedAt: Date
     _count: ProfileCountAggregateOutputType | null
@@ -1115,6 +1150,11 @@ export namespace Prisma {
     college?: boolean
     branch?: boolean
     year?: boolean
+    organizationId?: boolean
+    organizationRole?: boolean
+    joinedOrgAt?: boolean
+    isOrgAccount?: boolean
+    verified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["profile"]>
@@ -1133,6 +1173,11 @@ export namespace Prisma {
     college?: boolean
     branch?: boolean
     year?: boolean
+    organizationId?: boolean
+    organizationRole?: boolean
+    joinedOrgAt?: boolean
+    isOrgAccount?: boolean
+    verified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["profile"]>
@@ -1151,6 +1196,11 @@ export namespace Prisma {
     college?: boolean
     branch?: boolean
     year?: boolean
+    organizationId?: boolean
+    organizationRole?: boolean
+    joinedOrgAt?: boolean
+    isOrgAccount?: boolean
+    verified?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
@@ -1173,6 +1223,11 @@ export namespace Prisma {
       college: string | null
       branch: string | null
       year: number | null
+      organizationId: string | null
+      organizationRole: string | null
+      joinedOrgAt: Date | null
+      isOrgAccount: boolean
+      verified: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["profile"]>
@@ -1581,6 +1636,11 @@ export namespace Prisma {
     readonly college: FieldRef<"Profile", 'String'>
     readonly branch: FieldRef<"Profile", 'String'>
     readonly year: FieldRef<"Profile", 'Int'>
+    readonly organizationId: FieldRef<"Profile", 'String'>
+    readonly organizationRole: FieldRef<"Profile", 'String'>
+    readonly joinedOrgAt: FieldRef<"Profile", 'DateTime'>
+    readonly isOrgAccount: FieldRef<"Profile", 'Boolean'>
+    readonly verified: FieldRef<"Profile", 'Boolean'>
     readonly createdAt: FieldRef<"Profile", 'DateTime'>
     readonly updatedAt: FieldRef<"Profile", 'DateTime'>
   }
@@ -1899,6 +1959,11 @@ export namespace Prisma {
     college: 'college',
     branch: 'branch',
     year: 'year',
+    organizationId: 'organizationId',
+    organizationRole: 'organizationRole',
+    joinedOrgAt: 'joinedOrgAt',
+    isOrgAccount: 'isOrgAccount',
+    verified: 'verified',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -2018,6 +2083,11 @@ export namespace Prisma {
     college?: StringNullableFilter<"Profile"> | string | null
     branch?: StringNullableFilter<"Profile"> | string | null
     year?: IntNullableFilter<"Profile"> | number | null
+    organizationId?: StringNullableFilter<"Profile"> | string | null
+    organizationRole?: StringNullableFilter<"Profile"> | string | null
+    joinedOrgAt?: DateTimeNullableFilter<"Profile"> | Date | string | null
+    isOrgAccount?: BoolFilter<"Profile"> | boolean
+    verified?: BoolFilter<"Profile"> | boolean
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
   }
@@ -2036,6 +2106,11 @@ export namespace Prisma {
     college?: SortOrderInput | SortOrder
     branch?: SortOrderInput | SortOrder
     year?: SortOrderInput | SortOrder
+    organizationId?: SortOrderInput | SortOrder
+    organizationRole?: SortOrderInput | SortOrder
+    joinedOrgAt?: SortOrderInput | SortOrder
+    isOrgAccount?: SortOrder
+    verified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2057,6 +2132,11 @@ export namespace Prisma {
     college?: StringNullableFilter<"Profile"> | string | null
     branch?: StringNullableFilter<"Profile"> | string | null
     year?: IntNullableFilter<"Profile"> | number | null
+    organizationId?: StringNullableFilter<"Profile"> | string | null
+    organizationRole?: StringNullableFilter<"Profile"> | string | null
+    joinedOrgAt?: DateTimeNullableFilter<"Profile"> | Date | string | null
+    isOrgAccount?: BoolFilter<"Profile"> | boolean
+    verified?: BoolFilter<"Profile"> | boolean
     createdAt?: DateTimeFilter<"Profile"> | Date | string
     updatedAt?: DateTimeFilter<"Profile"> | Date | string
   }, "userId" | "username">
@@ -2075,6 +2155,11 @@ export namespace Prisma {
     college?: SortOrderInput | SortOrder
     branch?: SortOrderInput | SortOrder
     year?: SortOrderInput | SortOrder
+    organizationId?: SortOrderInput | SortOrder
+    organizationRole?: SortOrderInput | SortOrder
+    joinedOrgAt?: SortOrderInput | SortOrder
+    isOrgAccount?: SortOrder
+    verified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: ProfileCountOrderByAggregateInput
@@ -2101,6 +2186,11 @@ export namespace Prisma {
     college?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     branch?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     year?: IntNullableWithAggregatesFilter<"Profile"> | number | null
+    organizationId?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    organizationRole?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    joinedOrgAt?: DateTimeNullableWithAggregatesFilter<"Profile"> | Date | string | null
+    isOrgAccount?: BoolWithAggregatesFilter<"Profile"> | boolean
+    verified?: BoolWithAggregatesFilter<"Profile"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Profile"> | Date | string
   }
@@ -2119,6 +2209,11 @@ export namespace Prisma {
     college?: string | null
     branch?: string | null
     year?: number | null
+    organizationId?: string | null
+    organizationRole?: string | null
+    joinedOrgAt?: Date | string | null
+    isOrgAccount?: boolean
+    verified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2137,6 +2232,11 @@ export namespace Prisma {
     college?: string | null
     branch?: string | null
     year?: number | null
+    organizationId?: string | null
+    organizationRole?: string | null
+    joinedOrgAt?: Date | string | null
+    isOrgAccount?: boolean
+    verified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2155,6 +2255,11 @@ export namespace Prisma {
     college?: NullableStringFieldUpdateOperationsInput | string | null
     branch?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    organizationRole?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedOrgAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOrgAccount?: BoolFieldUpdateOperationsInput | boolean
+    verified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2173,6 +2278,11 @@ export namespace Prisma {
     college?: NullableStringFieldUpdateOperationsInput | string | null
     branch?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    organizationRole?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedOrgAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOrgAccount?: BoolFieldUpdateOperationsInput | boolean
+    verified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2191,6 +2301,11 @@ export namespace Prisma {
     college?: string | null
     branch?: string | null
     year?: number | null
+    organizationId?: string | null
+    organizationRole?: string | null
+    joinedOrgAt?: Date | string | null
+    isOrgAccount?: boolean
+    verified?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -2209,6 +2324,11 @@ export namespace Prisma {
     college?: NullableStringFieldUpdateOperationsInput | string | null
     branch?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    organizationRole?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedOrgAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOrgAccount?: BoolFieldUpdateOperationsInput | boolean
+    verified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2227,6 +2347,11 @@ export namespace Prisma {
     college?: NullableStringFieldUpdateOperationsInput | string | null
     branch?: NullableStringFieldUpdateOperationsInput | string | null
     year?: NullableIntFieldUpdateOperationsInput | number | null
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    organizationRole?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedOrgAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isOrgAccount?: BoolFieldUpdateOperationsInput | boolean
+    verified?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -2285,6 +2410,17 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2315,6 +2451,11 @@ export namespace Prisma {
     college?: SortOrder
     branch?: SortOrder
     year?: SortOrder
+    organizationId?: SortOrder
+    organizationRole?: SortOrder
+    joinedOrgAt?: SortOrder
+    isOrgAccount?: SortOrder
+    verified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2336,6 +2477,11 @@ export namespace Prisma {
     college?: SortOrder
     branch?: SortOrder
     year?: SortOrder
+    organizationId?: SortOrder
+    organizationRole?: SortOrder
+    joinedOrgAt?: SortOrder
+    isOrgAccount?: SortOrder
+    verified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2353,6 +2499,11 @@ export namespace Prisma {
     college?: SortOrder
     branch?: SortOrder
     year?: SortOrder
+    organizationId?: SortOrder
+    organizationRole?: SortOrder
+    joinedOrgAt?: SortOrder
+    isOrgAccount?: SortOrder
+    verified?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -2421,6 +2572,20 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -2462,6 +2627,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type DateTimeFieldUpdateOperationsInput = {
@@ -2510,6 +2679,17 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -2601,6 +2781,20 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {

@@ -1,11 +1,13 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["connection"]
 }
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../client"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+  output          = "../client"
 }
 
 model Connection {
@@ -14,4 +16,5 @@ model Connection {
   createdAt   DateTime @default(now())
 
   @@id([followerId, followingId])
+  @@schema("connection")
 }

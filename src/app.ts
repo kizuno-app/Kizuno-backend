@@ -25,12 +25,15 @@ import { connectionRoutes } from './modules/connection';
 import { chatRoutes } from './modules/chat';
 import { notificationRoutes, setupNotificationEventSubscribers } from './modules/notification';
 import { discoverRoutes } from './modules/discover';
-
+import { organizationRoutes, platformAdminOrganizationRoutes } from './modules/organization';
+import { reportRoutes } from './modules/report';
+import { setupEmailEventSubscribers } from './modules/email';
 // Setup Event Subscribers
 setupAuthEventSubscribers();
 setupUserEventSubscribers();
 setupFeedEventSubscribers();
 setupNotificationEventSubscribers();
+setupEmailEventSubscribers();
 
 // Register Routes
 app.use('/api/v1/auth', authRoutes);
@@ -41,7 +44,9 @@ app.use('/api/v1/connections', connectionRoutes);
 app.use('/api/v1/chat', chatRoutes);
 app.use('/api/v1/user-alerts', notificationRoutes);
 app.use('/api/v1/discover', discoverRoutes);
-
+app.use('/api/v1/organizations', organizationRoutes);
+app.use('/api/v1/_sys/x-org-ops', platformAdminOrganizationRoutes);
+app.use('/api/v1/reports', reportRoutes);
 // Error Handling
 app.use(errorHandler);
 

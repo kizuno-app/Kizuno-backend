@@ -134,12 +134,15 @@ const config = {
         "native": true
       }
     ],
-    "previewFeatures": [],
+    "previewFeatures": [
+      "multiSchema"
+    ],
     "sourceFilePath": "D:\\CampusConnect\\campus-connect-backend\\src\\modules\\feed\\db\\schema\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../../../.env"
   },
   "relativePath": "../schema",
   "clientVersion": "5.22.0",
@@ -157,8 +160,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../client\"\n}\n\nmodel FeedConfig {\n  userId    String   @id\n  algorithm String   @default(\"default\")\n  updatedAt DateTime @updatedAt\n}\n",
-  "inlineSchemaHash": "d46fdecf48343ca42307e1044c9750190f57e5a7a320d39f23b13f9096d59610",
+  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n  schemas  = [\"feed\"]\n}\n\ngenerator client {\n  provider        = \"prisma-client-js\"\n  previewFeatures = [\"multiSchema\"]\n  output          = \"../client\"\n}\n\nmodel FeedConfig {\n  userId    String   @id\n  algorithm String   @default(\"default\")\n  updatedAt DateTime @updatedAt\n\n  @@schema(\"feed\")\n}\n",
+  "inlineSchemaHash": "13e83a91b4359ebfac71b72c195a05010912fa665a59860a1d9803272dc0cab0",
   "copyEngine": true
 }
 config.dirname = '/'

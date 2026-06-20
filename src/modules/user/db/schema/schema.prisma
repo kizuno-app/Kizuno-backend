@@ -24,6 +24,11 @@ model Profile {
   college   String?
   branch    String?
   year      Int?
+  organizationId String?
+  organizationRole String?
+  joinedOrgAt DateTime?
+  isOrgAccount Boolean @default(false)
+  verified  Boolean @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

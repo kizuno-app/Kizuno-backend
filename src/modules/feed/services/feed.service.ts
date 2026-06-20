@@ -2,6 +2,7 @@ import { redisClient } from '../../../shared/redis';
 import { ConnectionService } from '../../connection/services/connection.service';
 import { PostService } from '../../post/services/post.service';
 import { UserService } from '../../user/services/user.service';
+import { eventBus } from '../../../shared/events';
 
 interface FeedPostContext {
   postId: string;
@@ -87,22 +88,48 @@ export class FeedService {
     // Global score ignores social proximity
     const globalScore = (0.4 * freshness) + (0.4 * velocity) + (0.2 * engagement);
 
-    // Push to global trending feed
-    const key = `feed:global:trending`;
-    await redisClient.zadd(key, globalScore, post.id);
-    await redisClient.zremrangebyrank(key, 0, -251);
+    if (post.visibility === 'ORGANIZATION_ONLY') {
+      const orgTrendingKey = `feed:org:${post.organizationId}`; // Use the same org cache for now or trending-specific one
+      await redisClient.zadd(orgTrendingKey, globalScore, post.id);
+      await redisClient.zremrangebyrank(orgTrendingKey, 0, -251);
+
+      // Virality Check - Breakout
+      const VIRALITY_THRESHOLD = 50; // Set to 50 for testing, usually 1000+
+      
+      // Assume Organization.optOutVirality was checked earlier or we allow it for now per user
+      if (globalScore >= VIRALITY_THRESHOLD) {
+        const globalKey = `feed:global:trending`;
+        await redisClient.zadd(globalKey, globalScore, post.id);
+        await redisClient.zremrangebyrank(globalKey, 0, -251);
+        
+        // Emit PostPromotedToGlobal via EventBus
+        eventBus.publish('POST_PROMOTED_TO_GLOBAL', {
+          postId: post.id,
+          userId: post.userId,
+        });
+      }
+    } else {
+      // Push to global trending feed
+      const key = `feed:global:trending`;
+      await redisClient.zadd(key, globalScore, post.id);
+      await redisClient.zremrangebyrank(key, 0, -251);
+    }
   }
 
-  static async generateFeed(userId: string, limit = 20, offset = 0) {
+  static async generateFeed(userId: string, organizationId?: string, limit = 20, offset = 0, seenIds: string[] = []) {
     const userKey = `feed:user:${userId}`;
     const globalKey = `feed:global:trending`;
+    const orgKey = organizationId ? `feed:org:${organizationId}` : null;
     
-    // Fetch personal feed and global trending feed
-    const personalPostIds = await redisClient.zrevrange(userKey, offset, offset + limit - 1);
-    const globalPostIds = await redisClient.zrevrange(globalKey, offset, offset + limit - 1);
+    // Fetch a larger pool from Redis to filter seenIds in-memory
+    const redisLimit = Math.max(100, seenIds.length + limit);
+    const followingIds = await redisClient.zrevrange(userKey, 0, redisLimit - 1);
+    const globalIds = await redisClient.zrevrange(globalKey, 0, redisLimit - 1);
+    const orgIds = orgKey ? await redisClient.zrevrange(orgKey, 0, redisLimit - 1) : [];
     
-    // Merge and deduplicate
-    const mergedIds = Array.from(new Set([...personalPostIds, ...globalPostIds]));
+    // Merge and filter out already seen post IDs
+    const mergedIds = Array.from(new Set([...followingIds, ...globalIds, ...orgIds]))
+      .filter(id => !seenIds.includes(id));
     
     let rawPosts: any[] = [];
 
@@ -115,14 +142,11 @@ export class FeedService {
       validPosts = fetched.filter(p => p !== null);
     }
 
-    // If we don't have enough posts, supplement with recent global posts
+    // If we don't have enough posts, supplement with recent global posts excluding seenIds and validPosts IDs
     if (validPosts.length < limit) {
-      const recentPosts = await PostService.getRecentPosts(limit, offset);
-      for (const p of recentPosts) {
-        if (!validPosts.find(vp => vp.id === p.id)) {
-          validPosts.push(p);
-        }
-      }
+      const excludedIds = Array.from(new Set([...seenIds, ...validPosts.map(p => p.id)]));
+      const recentPosts = await PostService.getRecentPostsExcluding(limit - validPosts.length, excludedIds, organizationId);
+      validPosts.push(...recentPosts);
     }
 
     // Recalculate scores for the viewer to dynamically sort the merged list
@@ -147,16 +171,33 @@ export class FeedService {
       .slice(0, limit)
       .map(sp => sp.post);
     
-    // Attach author profile data to each post
+    // Attach author profile data, repost data, and isReposted flag to each post
     const postsWithAuthors = await Promise.all(
       rawPosts.map(async (p: any) => {
         try {
           const author = await UserService.getProfile(p.userId);
           const isLiked = await PostService.hasLiked(userId, p.id);
-          return { ...p, author, isLiked };
+          const isReposted = await PostService.hasReposted(userId, p.id).catch(() => false);
+          const isShared = await PostService.hasShared(userId, p.id).catch(() => false);
+
+          // Hydrate the original post if this is a repost or quote
+          let repostOf = null;
+          if (p.repostOfId) {
+            try {
+              const originalPost = await PostService.getRepostOf(p.repostOfId);
+              if (originalPost) {
+                const originalAuthor = await UserService.getProfile(originalPost.userId).catch(() => null);
+                repostOf = { ...originalPost, author: originalAuthor };
+              }
+            } catch { /* original post may have been deleted */ }
+          }
+
+          return { ...p, author, isLiked, isReposted, isShared, repostOf };
         } catch {
           const isLiked = await PostService.hasLiked(userId, p.id).catch(() => false);
-          return { ...p, author: null, isLiked };
+          const isReposted = await PostService.hasReposted(userId, p.id).catch(() => false);
+          const isShared = await PostService.hasShared(userId, p.id).catch(() => false);
+          return { ...p, author: null, isLiked, isReposted, isShared, repostOf: null };
         }
       })
     );
@@ -171,10 +212,26 @@ export class FeedService {
         try {
           const author = await UserService.getProfile(p.userId);
           const isLiked = await PostService.hasLiked(viewerId, p.id);
-          return { ...p, author, isLiked };
+          const isReposted = await PostService.hasReposted(viewerId, p.id).catch(() => false);
+          const isShared = await PostService.hasShared(viewerId, p.id).catch(() => false);
+
+          let repostOf = null;
+          if (p.repostOfId) {
+            try {
+              const originalPost = await PostService.getRepostOf(p.repostOfId);
+              if (originalPost) {
+                const originalAuthor = await UserService.getProfile(originalPost.userId).catch(() => null);
+                repostOf = { ...originalPost, author: originalAuthor };
+              }
+            } catch { /* original may be deleted */ }
+          }
+
+          return { ...p, author, isLiked, isReposted, isShared, repostOf };
         } catch {
           const isLiked = await PostService.hasLiked(viewerId, p.id).catch(() => false);
-          return { ...p, author: null, isLiked };
+          const isReposted = await PostService.hasReposted(viewerId, p.id).catch(() => false);
+          const isShared = await PostService.hasShared(viewerId, p.id).catch(() => false);
+          return { ...p, author: null, isLiked, isReposted, isShared, repostOf: null };
         }
       })
     );
@@ -182,6 +239,21 @@ export class FeedService {
   }
 
   static async handleNewPost(post: any) {
+    if (post.visibility === 'ORGANIZATION_ONLY') {
+      const score = await this.calculateFinalScore(post.userId, {
+        postId: post.id,
+        authorId: post.userId,
+        createdAt: post.createdAt,
+        likes: post.likes,
+        commentsCount: post.commentsCount,
+        shares: post.shares
+      }, []);
+      const key = `feed:org:${post.organizationId}`;
+      await redisClient.zadd(key, score, post.id);
+      await redisClient.zremrangebyrank(key, 0, -251);
+      return;
+    }
+
     // When a new post is created, push to followers' feeds
     const followers = await ConnectionService.getFollowers(post.userId);
     
@@ -195,6 +267,13 @@ export class FeedService {
         shares: post.shares
       }, [{ followingId: post.userId }]);
       await this.pushToFeed(f.followerId, post.id, score);
+    }
+
+    if (post.visibility === 'PUBLIC') {
+      const globalScore = (0.4 * 1) + (0.4 * 0) + (0.2 * 0); // initial baseline
+      const key = `feed:global:trending`;
+      await redisClient.zadd(key, globalScore, post.id);
+      await redisClient.zremrangebyrank(key, 0, -251);
     }
   }
 }

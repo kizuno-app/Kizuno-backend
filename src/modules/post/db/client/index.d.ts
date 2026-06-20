@@ -24,6 +24,16 @@ export type Post = $Result.DefaultSelection<Prisma.$PostPayload>
  */
 export type Like = $Result.DefaultSelection<Prisma.$LikePayload>
 /**
+ * Model Share
+ * 
+ */
+export type Share = $Result.DefaultSelection<Prisma.$SharePayload>
+/**
+ * Model PostShare
+ * 
+ */
+export type PostShare = $Result.DefaultSelection<Prisma.$PostSharePayload>
+/**
  * Model Comment
  * 
  */
@@ -171,6 +181,26 @@ export class PrismaClient<
     * ```
     */
   get like(): Prisma.LikeDelegate<ExtArgs>;
+
+  /**
+   * `prisma.share`: Exposes CRUD operations for the **Share** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Shares
+    * const shares = await prisma.share.findMany()
+    * ```
+    */
+  get share(): Prisma.ShareDelegate<ExtArgs>;
+
+  /**
+   * `prisma.postShare`: Exposes CRUD operations for the **PostShare** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PostShares
+    * const postShares = await prisma.postShare.findMany()
+    * ```
+    */
+  get postShare(): Prisma.PostShareDelegate<ExtArgs>;
 
   /**
    * `prisma.comment`: Exposes CRUD operations for the **Comment** model.
@@ -624,6 +654,8 @@ export namespace Prisma {
   export const ModelName: {
     Post: 'Post',
     Like: 'Like',
+    Share: 'Share',
+    PostShare: 'PostShare',
     Comment: 'Comment'
   };
 
@@ -640,7 +672,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "post" | "like" | "comment"
+      modelProps: "post" | "like" | "share" | "postShare" | "comment"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -781,6 +813,146 @@ export namespace Prisma {
           count: {
             args: Prisma.LikeCountArgs<ExtArgs>
             result: $Utils.Optional<LikeCountAggregateOutputType> | number
+          }
+        }
+      }
+      Share: {
+        payload: Prisma.$SharePayload<ExtArgs>
+        fields: Prisma.ShareFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ShareFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ShareFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharePayload>
+          }
+          findFirst: {
+            args: Prisma.ShareFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ShareFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharePayload>
+          }
+          findMany: {
+            args: Prisma.ShareFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharePayload>[]
+          }
+          create: {
+            args: Prisma.ShareCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharePayload>
+          }
+          createMany: {
+            args: Prisma.ShareCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ShareCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharePayload>[]
+          }
+          delete: {
+            args: Prisma.ShareDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharePayload>
+          }
+          update: {
+            args: Prisma.ShareUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharePayload>
+          }
+          deleteMany: {
+            args: Prisma.ShareDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ShareUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ShareUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SharePayload>
+          }
+          aggregate: {
+            args: Prisma.ShareAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateShare>
+          }
+          groupBy: {
+            args: Prisma.ShareGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ShareGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ShareCountArgs<ExtArgs>
+            result: $Utils.Optional<ShareCountAggregateOutputType> | number
+          }
+        }
+      }
+      PostShare: {
+        payload: Prisma.$PostSharePayload<ExtArgs>
+        fields: Prisma.PostShareFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PostShareFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostSharePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PostShareFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostSharePayload>
+          }
+          findFirst: {
+            args: Prisma.PostShareFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostSharePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PostShareFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostSharePayload>
+          }
+          findMany: {
+            args: Prisma.PostShareFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostSharePayload>[]
+          }
+          create: {
+            args: Prisma.PostShareCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostSharePayload>
+          }
+          createMany: {
+            args: Prisma.PostShareCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PostShareCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostSharePayload>[]
+          }
+          delete: {
+            args: Prisma.PostShareDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostSharePayload>
+          }
+          update: {
+            args: Prisma.PostShareUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostSharePayload>
+          }
+          deleteMany: {
+            args: Prisma.PostShareDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PostShareUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PostShareUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PostSharePayload>
+          }
+          aggregate: {
+            args: Prisma.PostShareAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePostShare>
+          }
+          groupBy: {
+            args: Prisma.PostShareGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PostShareGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PostShareCountArgs<ExtArgs>
+            result: $Utils.Optional<PostShareCountAggregateOutputType> | number
           }
         }
       }
@@ -1011,6 +1183,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type PostCountOutputType
+   */
+
+  export type PostCountOutputType = {
+    reposts: number
+  }
+
+  export type PostCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reposts?: boolean | PostCountOutputTypeCountRepostsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * PostCountOutputType without action
+   */
+  export type PostCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostCountOutputType
+     */
+    select?: PostCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * PostCountOutputType without action
+   */
+  export type PostCountOutputTypeCountRepostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PostWhereInput
+  }
+
+
+  /**
    * Count Type CommentCountOutputType
    */
 
@@ -1061,12 +1264,14 @@ export namespace Prisma {
     likes: number | null
     commentsCount: number | null
     shares: number | null
+    repostsCount: number | null
   }
 
   export type PostSumAggregateOutputType = {
     likes: number | null
     commentsCount: number | null
     shares: number | null
+    repostsCount: number | null
   }
 
   export type PostMinAggregateOutputType = {
@@ -1076,6 +1281,11 @@ export namespace Prisma {
     likes: number | null
     commentsCount: number | null
     shares: number | null
+    repostsCount: number | null
+    visibility: string | null
+    organizationId: string | null
+    repostOfId: string | null
+    isQuote: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1087,6 +1297,11 @@ export namespace Prisma {
     likes: number | null
     commentsCount: number | null
     shares: number | null
+    repostsCount: number | null
+    visibility: string | null
+    organizationId: string | null
+    repostOfId: string | null
+    isQuote: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -1099,6 +1314,11 @@ export namespace Prisma {
     likes: number
     commentsCount: number
     shares: number
+    repostsCount: number
+    visibility: number
+    organizationId: number
+    repostOfId: number
+    isQuote: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -1109,12 +1329,14 @@ export namespace Prisma {
     likes?: true
     commentsCount?: true
     shares?: true
+    repostsCount?: true
   }
 
   export type PostSumAggregateInputType = {
     likes?: true
     commentsCount?: true
     shares?: true
+    repostsCount?: true
   }
 
   export type PostMinAggregateInputType = {
@@ -1124,6 +1346,11 @@ export namespace Prisma {
     likes?: true
     commentsCount?: true
     shares?: true
+    repostsCount?: true
+    visibility?: true
+    organizationId?: true
+    repostOfId?: true
+    isQuote?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1135,6 +1362,11 @@ export namespace Prisma {
     likes?: true
     commentsCount?: true
     shares?: true
+    repostsCount?: true
+    visibility?: true
+    organizationId?: true
+    repostOfId?: true
+    isQuote?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -1147,6 +1379,11 @@ export namespace Prisma {
     likes?: true
     commentsCount?: true
     shares?: true
+    repostsCount?: true
+    visibility?: true
+    organizationId?: true
+    repostOfId?: true
+    isQuote?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -1246,6 +1483,11 @@ export namespace Prisma {
     likes: number
     commentsCount: number
     shares: number
+    repostsCount: number
+    visibility: string
+    organizationId: string | null
+    repostOfId: string | null
+    isQuote: boolean
     createdAt: Date
     updatedAt: Date
     _count: PostCountAggregateOutputType | null
@@ -1277,8 +1519,16 @@ export namespace Prisma {
     likes?: boolean
     commentsCount?: boolean
     shares?: boolean
+    repostsCount?: boolean
+    visibility?: boolean
+    organizationId?: boolean
+    repostOfId?: boolean
+    isQuote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    repostOf?: boolean | Post$repostOfArgs<ExtArgs>
+    reposts?: boolean | Post$repostsArgs<ExtArgs>
+    _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
   export type PostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1289,8 +1539,14 @@ export namespace Prisma {
     likes?: boolean
     commentsCount?: boolean
     shares?: boolean
+    repostsCount?: boolean
+    visibility?: boolean
+    organizationId?: boolean
+    repostOfId?: boolean
+    isQuote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    repostOf?: boolean | Post$repostOfArgs<ExtArgs>
   }, ExtArgs["result"]["post"]>
 
   export type PostSelectScalar = {
@@ -1301,14 +1557,30 @@ export namespace Prisma {
     likes?: boolean
     commentsCount?: boolean
     shares?: boolean
+    repostsCount?: boolean
+    visibility?: boolean
+    organizationId?: boolean
+    repostOfId?: boolean
+    isQuote?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
+  export type PostInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repostOf?: boolean | Post$repostOfArgs<ExtArgs>
+    reposts?: boolean | Post$repostsArgs<ExtArgs>
+    _count?: boolean | PostCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type PostIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repostOf?: boolean | Post$repostOfArgs<ExtArgs>
+  }
 
   export type $PostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Post"
-    objects: {}
+    objects: {
+      repostOf: Prisma.$PostPayload<ExtArgs> | null
+      reposts: Prisma.$PostPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
@@ -1317,6 +1589,11 @@ export namespace Prisma {
       likes: number
       commentsCount: number
       shares: number
+      repostsCount: number
+      visibility: string
+      organizationId: string | null
+      repostOfId: string | null
+      isQuote: boolean
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["post"]>
@@ -1683,6 +1960,8 @@ export namespace Prisma {
    */
   export interface Prisma__PostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    repostOf<T extends Post$repostOfArgs<ExtArgs> = {}>(args?: Subset<T, Post$repostOfArgs<ExtArgs>>): Prisma__PostClient<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    reposts<T extends Post$repostsArgs<ExtArgs> = {}>(args?: Subset<T, Post$repostsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1719,6 +1998,11 @@ export namespace Prisma {
     readonly likes: FieldRef<"Post", 'Int'>
     readonly commentsCount: FieldRef<"Post", 'Int'>
     readonly shares: FieldRef<"Post", 'Int'>
+    readonly repostsCount: FieldRef<"Post", 'Int'>
+    readonly visibility: FieldRef<"Post", 'String'>
+    readonly organizationId: FieldRef<"Post", 'String'>
+    readonly repostOfId: FieldRef<"Post", 'String'>
+    readonly isQuote: FieldRef<"Post", 'Boolean'>
     readonly createdAt: FieldRef<"Post", 'DateTime'>
     readonly updatedAt: FieldRef<"Post", 'DateTime'>
   }
@@ -1734,6 +2018,10 @@ export namespace Prisma {
      */
     select?: PostSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    /**
      * Filter, which Post to fetch.
      */
     where: PostWhereUniqueInput
@@ -1748,6 +2036,10 @@ export namespace Prisma {
      */
     select?: PostSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    /**
      * Filter, which Post to fetch.
      */
     where: PostWhereUniqueInput
@@ -1761,6 +2053,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Post
      */
     select?: PostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
     /**
      * Filter, which Post to fetch.
      */
@@ -1806,6 +2102,10 @@ export namespace Prisma {
      */
     select?: PostSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    /**
      * Filter, which Post to fetch.
      */
     where?: PostWhereInput
@@ -1850,6 +2150,10 @@ export namespace Prisma {
      */
     select?: PostSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    /**
      * Filter, which Posts to fetch.
      */
     where?: PostWhereInput
@@ -1889,6 +2193,10 @@ export namespace Prisma {
      */
     select?: PostSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    /**
      * The data needed to create a Post.
      */
     data: XOR<PostCreateInput, PostUncheckedCreateInput>
@@ -1918,6 +2226,10 @@ export namespace Prisma {
      */
     data: PostCreateManyInput | PostCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -1928,6 +2240,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Post
      */
     select?: PostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
     /**
      * The data needed to update a Post.
      */
@@ -1961,6 +2277,10 @@ export namespace Prisma {
      */
     select?: PostSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    /**
      * The filter to search for the Post to update in case it exists.
      */
     where: PostWhereUniqueInput
@@ -1983,6 +2303,10 @@ export namespace Prisma {
      */
     select?: PostSelect<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    /**
      * Filter which Post to delete.
      */
     where: PostWhereUniqueInput
@@ -1999,6 +2323,41 @@ export namespace Prisma {
   }
 
   /**
+   * Post.repostOf
+   */
+  export type Post$repostOfArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Post
+     */
+    select?: PostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    where?: PostWhereInput
+  }
+
+  /**
+   * Post.reposts
+   */
+  export type Post$repostsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Post
+     */
+    select?: PostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
+    where?: PostWhereInput
+    orderBy?: PostOrderByWithRelationInput | PostOrderByWithRelationInput[]
+    cursor?: PostWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PostScalarFieldEnum | PostScalarFieldEnum[]
+  }
+
+  /**
    * Post without action
    */
   export type PostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2006,6 +2365,10 @@ export namespace Prisma {
      * Select specific fields to fetch from the Post
      */
     select?: PostSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PostInclude<ExtArgs> | null
   }
 
 
@@ -2872,6 +3235,1738 @@ export namespace Prisma {
      * Select specific fields to fetch from the Like
      */
     select?: LikeSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Share
+   */
+
+  export type AggregateShare = {
+    _count: ShareCountAggregateOutputType | null
+    _min: ShareMinAggregateOutputType | null
+    _max: ShareMaxAggregateOutputType | null
+  }
+
+  export type ShareMinAggregateOutputType = {
+    id: string | null
+    postId: string | null
+    userId: string | null
+    createdAt: Date | null
+  }
+
+  export type ShareMaxAggregateOutputType = {
+    id: string | null
+    postId: string | null
+    userId: string | null
+    createdAt: Date | null
+  }
+
+  export type ShareCountAggregateOutputType = {
+    id: number
+    postId: number
+    userId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ShareMinAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type ShareMaxAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+    createdAt?: true
+  }
+
+  export type ShareCountAggregateInputType = {
+    id?: true
+    postId?: true
+    userId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ShareAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Share to aggregate.
+     */
+    where?: ShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shares to fetch.
+     */
+    orderBy?: ShareOrderByWithRelationInput | ShareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Shares
+    **/
+    _count?: true | ShareCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ShareMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ShareMaxAggregateInputType
+  }
+
+  export type GetShareAggregateType<T extends ShareAggregateArgs> = {
+        [P in keyof T & keyof AggregateShare]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateShare[P]>
+      : GetScalarType<T[P], AggregateShare[P]>
+  }
+
+
+
+
+  export type ShareGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ShareWhereInput
+    orderBy?: ShareOrderByWithAggregationInput | ShareOrderByWithAggregationInput[]
+    by: ShareScalarFieldEnum[] | ShareScalarFieldEnum
+    having?: ShareScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ShareCountAggregateInputType | true
+    _min?: ShareMinAggregateInputType
+    _max?: ShareMaxAggregateInputType
+  }
+
+  export type ShareGroupByOutputType = {
+    id: string
+    postId: string
+    userId: string
+    createdAt: Date
+    _count: ShareCountAggregateOutputType | null
+    _min: ShareMinAggregateOutputType | null
+    _max: ShareMaxAggregateOutputType | null
+  }
+
+  type GetShareGroupByPayload<T extends ShareGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ShareGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ShareGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ShareGroupByOutputType[P]>
+            : GetScalarType<T[P], ShareGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ShareSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    postId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["share"]>
+
+  export type ShareSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    postId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["share"]>
+
+  export type ShareSelectScalar = {
+    id?: boolean
+    postId?: boolean
+    userId?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $SharePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Share"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      postId: string
+      userId: string
+      createdAt: Date
+    }, ExtArgs["result"]["share"]>
+    composites: {}
+  }
+
+  type ShareGetPayload<S extends boolean | null | undefined | ShareDefaultArgs> = $Result.GetResult<Prisma.$SharePayload, S>
+
+  type ShareCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ShareFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ShareCountAggregateInputType | true
+    }
+
+  export interface ShareDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Share'], meta: { name: 'Share' } }
+    /**
+     * Find zero or one Share that matches the filter.
+     * @param {ShareFindUniqueArgs} args - Arguments to find a Share
+     * @example
+     * // Get one Share
+     * const share = await prisma.share.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ShareFindUniqueArgs>(args: SelectSubset<T, ShareFindUniqueArgs<ExtArgs>>): Prisma__ShareClient<$Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Share that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ShareFindUniqueOrThrowArgs} args - Arguments to find a Share
+     * @example
+     * // Get one Share
+     * const share = await prisma.share.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ShareFindUniqueOrThrowArgs>(args: SelectSubset<T, ShareFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ShareClient<$Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Share that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareFindFirstArgs} args - Arguments to find a Share
+     * @example
+     * // Get one Share
+     * const share = await prisma.share.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ShareFindFirstArgs>(args?: SelectSubset<T, ShareFindFirstArgs<ExtArgs>>): Prisma__ShareClient<$Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Share that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareFindFirstOrThrowArgs} args - Arguments to find a Share
+     * @example
+     * // Get one Share
+     * const share = await prisma.share.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ShareFindFirstOrThrowArgs>(args?: SelectSubset<T, ShareFindFirstOrThrowArgs<ExtArgs>>): Prisma__ShareClient<$Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Shares that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Shares
+     * const shares = await prisma.share.findMany()
+     * 
+     * // Get first 10 Shares
+     * const shares = await prisma.share.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const shareWithIdOnly = await prisma.share.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ShareFindManyArgs>(args?: SelectSubset<T, ShareFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Share.
+     * @param {ShareCreateArgs} args - Arguments to create a Share.
+     * @example
+     * // Create one Share
+     * const Share = await prisma.share.create({
+     *   data: {
+     *     // ... data to create a Share
+     *   }
+     * })
+     * 
+     */
+    create<T extends ShareCreateArgs>(args: SelectSubset<T, ShareCreateArgs<ExtArgs>>): Prisma__ShareClient<$Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Shares.
+     * @param {ShareCreateManyArgs} args - Arguments to create many Shares.
+     * @example
+     * // Create many Shares
+     * const share = await prisma.share.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ShareCreateManyArgs>(args?: SelectSubset<T, ShareCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Shares and returns the data saved in the database.
+     * @param {ShareCreateManyAndReturnArgs} args - Arguments to create many Shares.
+     * @example
+     * // Create many Shares
+     * const share = await prisma.share.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Shares and only return the `id`
+     * const shareWithIdOnly = await prisma.share.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ShareCreateManyAndReturnArgs>(args?: SelectSubset<T, ShareCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a Share.
+     * @param {ShareDeleteArgs} args - Arguments to delete one Share.
+     * @example
+     * // Delete one Share
+     * const Share = await prisma.share.delete({
+     *   where: {
+     *     // ... filter to delete one Share
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ShareDeleteArgs>(args: SelectSubset<T, ShareDeleteArgs<ExtArgs>>): Prisma__ShareClient<$Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Share.
+     * @param {ShareUpdateArgs} args - Arguments to update one Share.
+     * @example
+     * // Update one Share
+     * const share = await prisma.share.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ShareUpdateArgs>(args: SelectSubset<T, ShareUpdateArgs<ExtArgs>>): Prisma__ShareClient<$Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Shares.
+     * @param {ShareDeleteManyArgs} args - Arguments to filter Shares to delete.
+     * @example
+     * // Delete a few Shares
+     * const { count } = await prisma.share.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ShareDeleteManyArgs>(args?: SelectSubset<T, ShareDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Shares.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Shares
+     * const share = await prisma.share.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ShareUpdateManyArgs>(args: SelectSubset<T, ShareUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Share.
+     * @param {ShareUpsertArgs} args - Arguments to update or create a Share.
+     * @example
+     * // Update or create a Share
+     * const share = await prisma.share.upsert({
+     *   create: {
+     *     // ... data to create a Share
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Share we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ShareUpsertArgs>(args: SelectSubset<T, ShareUpsertArgs<ExtArgs>>): Prisma__ShareClient<$Result.GetResult<Prisma.$SharePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Shares.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareCountArgs} args - Arguments to filter Shares to count.
+     * @example
+     * // Count the number of Shares
+     * const count = await prisma.share.count({
+     *   where: {
+     *     // ... the filter for the Shares we want to count
+     *   }
+     * })
+    **/
+    count<T extends ShareCountArgs>(
+      args?: Subset<T, ShareCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ShareCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Share.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ShareAggregateArgs>(args: Subset<T, ShareAggregateArgs>): Prisma.PrismaPromise<GetShareAggregateType<T>>
+
+    /**
+     * Group by Share.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShareGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ShareGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ShareGroupByArgs['orderBy'] }
+        : { orderBy?: ShareGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ShareGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetShareGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Share model
+   */
+  readonly fields: ShareFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Share.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ShareClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Share model
+   */ 
+  interface ShareFieldRefs {
+    readonly id: FieldRef<"Share", 'String'>
+    readonly postId: FieldRef<"Share", 'String'>
+    readonly userId: FieldRef<"Share", 'String'>
+    readonly createdAt: FieldRef<"Share", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Share findUnique
+   */
+  export type ShareFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect<ExtArgs> | null
+    /**
+     * Filter, which Share to fetch.
+     */
+    where: ShareWhereUniqueInput
+  }
+
+  /**
+   * Share findUniqueOrThrow
+   */
+  export type ShareFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect<ExtArgs> | null
+    /**
+     * Filter, which Share to fetch.
+     */
+    where: ShareWhereUniqueInput
+  }
+
+  /**
+   * Share findFirst
+   */
+  export type ShareFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect<ExtArgs> | null
+    /**
+     * Filter, which Share to fetch.
+     */
+    where?: ShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shares to fetch.
+     */
+    orderBy?: ShareOrderByWithRelationInput | ShareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Shares.
+     */
+    cursor?: ShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Shares.
+     */
+    distinct?: ShareScalarFieldEnum | ShareScalarFieldEnum[]
+  }
+
+  /**
+   * Share findFirstOrThrow
+   */
+  export type ShareFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect<ExtArgs> | null
+    /**
+     * Filter, which Share to fetch.
+     */
+    where?: ShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shares to fetch.
+     */
+    orderBy?: ShareOrderByWithRelationInput | ShareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Shares.
+     */
+    cursor?: ShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Shares.
+     */
+    distinct?: ShareScalarFieldEnum | ShareScalarFieldEnum[]
+  }
+
+  /**
+   * Share findMany
+   */
+  export type ShareFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect<ExtArgs> | null
+    /**
+     * Filter, which Shares to fetch.
+     */
+    where?: ShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shares to fetch.
+     */
+    orderBy?: ShareOrderByWithRelationInput | ShareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Shares.
+     */
+    cursor?: ShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shares.
+     */
+    skip?: number
+    distinct?: ShareScalarFieldEnum | ShareScalarFieldEnum[]
+  }
+
+  /**
+   * Share create
+   */
+  export type ShareCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Share.
+     */
+    data: XOR<ShareCreateInput, ShareUncheckedCreateInput>
+  }
+
+  /**
+   * Share createMany
+   */
+  export type ShareCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Shares.
+     */
+    data: ShareCreateManyInput | ShareCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Share createManyAndReturn
+   */
+  export type ShareCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many Shares.
+     */
+    data: ShareCreateManyInput | ShareCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Share update
+   */
+  export type ShareUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Share.
+     */
+    data: XOR<ShareUpdateInput, ShareUncheckedUpdateInput>
+    /**
+     * Choose, which Share to update.
+     */
+    where: ShareWhereUniqueInput
+  }
+
+  /**
+   * Share updateMany
+   */
+  export type ShareUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Shares.
+     */
+    data: XOR<ShareUpdateManyMutationInput, ShareUncheckedUpdateManyInput>
+    /**
+     * Filter which Shares to update
+     */
+    where?: ShareWhereInput
+  }
+
+  /**
+   * Share upsert
+   */
+  export type ShareUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Share to update in case it exists.
+     */
+    where: ShareWhereUniqueInput
+    /**
+     * In case the Share found by the `where` argument doesn't exist, create a new Share with this data.
+     */
+    create: XOR<ShareCreateInput, ShareUncheckedCreateInput>
+    /**
+     * In case the Share was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ShareUpdateInput, ShareUncheckedUpdateInput>
+  }
+
+  /**
+   * Share delete
+   */
+  export type ShareDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect<ExtArgs> | null
+    /**
+     * Filter which Share to delete.
+     */
+    where: ShareWhereUniqueInput
+  }
+
+  /**
+   * Share deleteMany
+   */
+  export type ShareDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Shares to delete
+     */
+    where?: ShareWhereInput
+  }
+
+  /**
+   * Share without action
+   */
+  export type ShareDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Share
+     */
+    select?: ShareSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PostShare
+   */
+
+  export type AggregatePostShare = {
+    _count: PostShareCountAggregateOutputType | null
+    _min: PostShareMinAggregateOutputType | null
+    _max: PostShareMaxAggregateOutputType | null
+  }
+
+  export type PostShareMinAggregateOutputType = {
+    id: string | null
+    postId: string | null
+    shareToken: string | null
+    createdAt: Date | null
+  }
+
+  export type PostShareMaxAggregateOutputType = {
+    id: string | null
+    postId: string | null
+    shareToken: string | null
+    createdAt: Date | null
+  }
+
+  export type PostShareCountAggregateOutputType = {
+    id: number
+    postId: number
+    shareToken: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type PostShareMinAggregateInputType = {
+    id?: true
+    postId?: true
+    shareToken?: true
+    createdAt?: true
+  }
+
+  export type PostShareMaxAggregateInputType = {
+    id?: true
+    postId?: true
+    shareToken?: true
+    createdAt?: true
+  }
+
+  export type PostShareCountAggregateInputType = {
+    id?: true
+    postId?: true
+    shareToken?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type PostShareAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PostShare to aggregate.
+     */
+    where?: PostShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostShares to fetch.
+     */
+    orderBy?: PostShareOrderByWithRelationInput | PostShareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PostShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostShares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostShares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PostShares
+    **/
+    _count?: true | PostShareCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PostShareMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PostShareMaxAggregateInputType
+  }
+
+  export type GetPostShareAggregateType<T extends PostShareAggregateArgs> = {
+        [P in keyof T & keyof AggregatePostShare]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePostShare[P]>
+      : GetScalarType<T[P], AggregatePostShare[P]>
+  }
+
+
+
+
+  export type PostShareGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PostShareWhereInput
+    orderBy?: PostShareOrderByWithAggregationInput | PostShareOrderByWithAggregationInput[]
+    by: PostShareScalarFieldEnum[] | PostShareScalarFieldEnum
+    having?: PostShareScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PostShareCountAggregateInputType | true
+    _min?: PostShareMinAggregateInputType
+    _max?: PostShareMaxAggregateInputType
+  }
+
+  export type PostShareGroupByOutputType = {
+    id: string
+    postId: string
+    shareToken: string
+    createdAt: Date
+    _count: PostShareCountAggregateOutputType | null
+    _min: PostShareMinAggregateOutputType | null
+    _max: PostShareMaxAggregateOutputType | null
+  }
+
+  type GetPostShareGroupByPayload<T extends PostShareGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PostShareGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PostShareGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PostShareGroupByOutputType[P]>
+            : GetScalarType<T[P], PostShareGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PostShareSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    postId?: boolean
+    shareToken?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["postShare"]>
+
+  export type PostShareSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    postId?: boolean
+    shareToken?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["postShare"]>
+
+  export type PostShareSelectScalar = {
+    id?: boolean
+    postId?: boolean
+    shareToken?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $PostSharePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PostShare"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      postId: string
+      shareToken: string
+      createdAt: Date
+    }, ExtArgs["result"]["postShare"]>
+    composites: {}
+  }
+
+  type PostShareGetPayload<S extends boolean | null | undefined | PostShareDefaultArgs> = $Result.GetResult<Prisma.$PostSharePayload, S>
+
+  type PostShareCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PostShareFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PostShareCountAggregateInputType | true
+    }
+
+  export interface PostShareDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PostShare'], meta: { name: 'PostShare' } }
+    /**
+     * Find zero or one PostShare that matches the filter.
+     * @param {PostShareFindUniqueArgs} args - Arguments to find a PostShare
+     * @example
+     * // Get one PostShare
+     * const postShare = await prisma.postShare.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PostShareFindUniqueArgs>(args: SelectSubset<T, PostShareFindUniqueArgs<ExtArgs>>): Prisma__PostShareClient<$Result.GetResult<Prisma.$PostSharePayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one PostShare that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PostShareFindUniqueOrThrowArgs} args - Arguments to find a PostShare
+     * @example
+     * // Get one PostShare
+     * const postShare = await prisma.postShare.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PostShareFindUniqueOrThrowArgs>(args: SelectSubset<T, PostShareFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PostShareClient<$Result.GetResult<Prisma.$PostSharePayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first PostShare that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostShareFindFirstArgs} args - Arguments to find a PostShare
+     * @example
+     * // Get one PostShare
+     * const postShare = await prisma.postShare.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PostShareFindFirstArgs>(args?: SelectSubset<T, PostShareFindFirstArgs<ExtArgs>>): Prisma__PostShareClient<$Result.GetResult<Prisma.$PostSharePayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first PostShare that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostShareFindFirstOrThrowArgs} args - Arguments to find a PostShare
+     * @example
+     * // Get one PostShare
+     * const postShare = await prisma.postShare.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PostShareFindFirstOrThrowArgs>(args?: SelectSubset<T, PostShareFindFirstOrThrowArgs<ExtArgs>>): Prisma__PostShareClient<$Result.GetResult<Prisma.$PostSharePayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more PostShares that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostShareFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PostShares
+     * const postShares = await prisma.postShare.findMany()
+     * 
+     * // Get first 10 PostShares
+     * const postShares = await prisma.postShare.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const postShareWithIdOnly = await prisma.postShare.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PostShareFindManyArgs>(args?: SelectSubset<T, PostShareFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostSharePayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a PostShare.
+     * @param {PostShareCreateArgs} args - Arguments to create a PostShare.
+     * @example
+     * // Create one PostShare
+     * const PostShare = await prisma.postShare.create({
+     *   data: {
+     *     // ... data to create a PostShare
+     *   }
+     * })
+     * 
+     */
+    create<T extends PostShareCreateArgs>(args: SelectSubset<T, PostShareCreateArgs<ExtArgs>>): Prisma__PostShareClient<$Result.GetResult<Prisma.$PostSharePayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many PostShares.
+     * @param {PostShareCreateManyArgs} args - Arguments to create many PostShares.
+     * @example
+     * // Create many PostShares
+     * const postShare = await prisma.postShare.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PostShareCreateManyArgs>(args?: SelectSubset<T, PostShareCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PostShares and returns the data saved in the database.
+     * @param {PostShareCreateManyAndReturnArgs} args - Arguments to create many PostShares.
+     * @example
+     * // Create many PostShares
+     * const postShare = await prisma.postShare.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PostShares and only return the `id`
+     * const postShareWithIdOnly = await prisma.postShare.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PostShareCreateManyAndReturnArgs>(args?: SelectSubset<T, PostShareCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PostSharePayload<ExtArgs>, T, "createManyAndReturn">>
+
+    /**
+     * Delete a PostShare.
+     * @param {PostShareDeleteArgs} args - Arguments to delete one PostShare.
+     * @example
+     * // Delete one PostShare
+     * const PostShare = await prisma.postShare.delete({
+     *   where: {
+     *     // ... filter to delete one PostShare
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PostShareDeleteArgs>(args: SelectSubset<T, PostShareDeleteArgs<ExtArgs>>): Prisma__PostShareClient<$Result.GetResult<Prisma.$PostSharePayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one PostShare.
+     * @param {PostShareUpdateArgs} args - Arguments to update one PostShare.
+     * @example
+     * // Update one PostShare
+     * const postShare = await prisma.postShare.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PostShareUpdateArgs>(args: SelectSubset<T, PostShareUpdateArgs<ExtArgs>>): Prisma__PostShareClient<$Result.GetResult<Prisma.$PostSharePayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more PostShares.
+     * @param {PostShareDeleteManyArgs} args - Arguments to filter PostShares to delete.
+     * @example
+     * // Delete a few PostShares
+     * const { count } = await prisma.postShare.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PostShareDeleteManyArgs>(args?: SelectSubset<T, PostShareDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PostShares.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostShareUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PostShares
+     * const postShare = await prisma.postShare.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PostShareUpdateManyArgs>(args: SelectSubset<T, PostShareUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PostShare.
+     * @param {PostShareUpsertArgs} args - Arguments to update or create a PostShare.
+     * @example
+     * // Update or create a PostShare
+     * const postShare = await prisma.postShare.upsert({
+     *   create: {
+     *     // ... data to create a PostShare
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PostShare we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PostShareUpsertArgs>(args: SelectSubset<T, PostShareUpsertArgs<ExtArgs>>): Prisma__PostShareClient<$Result.GetResult<Prisma.$PostSharePayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of PostShares.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostShareCountArgs} args - Arguments to filter PostShares to count.
+     * @example
+     * // Count the number of PostShares
+     * const count = await prisma.postShare.count({
+     *   where: {
+     *     // ... the filter for the PostShares we want to count
+     *   }
+     * })
+    **/
+    count<T extends PostShareCountArgs>(
+      args?: Subset<T, PostShareCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PostShareCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PostShare.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostShareAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PostShareAggregateArgs>(args: Subset<T, PostShareAggregateArgs>): Prisma.PrismaPromise<GetPostShareAggregateType<T>>
+
+    /**
+     * Group by PostShare.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PostShareGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PostShareGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PostShareGroupByArgs['orderBy'] }
+        : { orderBy?: PostShareGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PostShareGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPostShareGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PostShare model
+   */
+  readonly fields: PostShareFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PostShare.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PostShareClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PostShare model
+   */ 
+  interface PostShareFieldRefs {
+    readonly id: FieldRef<"PostShare", 'String'>
+    readonly postId: FieldRef<"PostShare", 'String'>
+    readonly shareToken: FieldRef<"PostShare", 'String'>
+    readonly createdAt: FieldRef<"PostShare", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PostShare findUnique
+   */
+  export type PostShareFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelect<ExtArgs> | null
+    /**
+     * Filter, which PostShare to fetch.
+     */
+    where: PostShareWhereUniqueInput
+  }
+
+  /**
+   * PostShare findUniqueOrThrow
+   */
+  export type PostShareFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelect<ExtArgs> | null
+    /**
+     * Filter, which PostShare to fetch.
+     */
+    where: PostShareWhereUniqueInput
+  }
+
+  /**
+   * PostShare findFirst
+   */
+  export type PostShareFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelect<ExtArgs> | null
+    /**
+     * Filter, which PostShare to fetch.
+     */
+    where?: PostShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostShares to fetch.
+     */
+    orderBy?: PostShareOrderByWithRelationInput | PostShareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PostShares.
+     */
+    cursor?: PostShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostShares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostShares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PostShares.
+     */
+    distinct?: PostShareScalarFieldEnum | PostShareScalarFieldEnum[]
+  }
+
+  /**
+   * PostShare findFirstOrThrow
+   */
+  export type PostShareFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelect<ExtArgs> | null
+    /**
+     * Filter, which PostShare to fetch.
+     */
+    where?: PostShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostShares to fetch.
+     */
+    orderBy?: PostShareOrderByWithRelationInput | PostShareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PostShares.
+     */
+    cursor?: PostShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostShares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostShares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PostShares.
+     */
+    distinct?: PostShareScalarFieldEnum | PostShareScalarFieldEnum[]
+  }
+
+  /**
+   * PostShare findMany
+   */
+  export type PostShareFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelect<ExtArgs> | null
+    /**
+     * Filter, which PostShares to fetch.
+     */
+    where?: PostShareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PostShares to fetch.
+     */
+    orderBy?: PostShareOrderByWithRelationInput | PostShareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PostShares.
+     */
+    cursor?: PostShareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PostShares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PostShares.
+     */
+    skip?: number
+    distinct?: PostShareScalarFieldEnum | PostShareScalarFieldEnum[]
+  }
+
+  /**
+   * PostShare create
+   */
+  export type PostShareCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelect<ExtArgs> | null
+    /**
+     * The data needed to create a PostShare.
+     */
+    data: XOR<PostShareCreateInput, PostShareUncheckedCreateInput>
+  }
+
+  /**
+   * PostShare createMany
+   */
+  export type PostShareCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PostShares.
+     */
+    data: PostShareCreateManyInput | PostShareCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PostShare createManyAndReturn
+   */
+  export type PostShareCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * The data used to create many PostShares.
+     */
+    data: PostShareCreateManyInput | PostShareCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PostShare update
+   */
+  export type PostShareUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelect<ExtArgs> | null
+    /**
+     * The data needed to update a PostShare.
+     */
+    data: XOR<PostShareUpdateInput, PostShareUncheckedUpdateInput>
+    /**
+     * Choose, which PostShare to update.
+     */
+    where: PostShareWhereUniqueInput
+  }
+
+  /**
+   * PostShare updateMany
+   */
+  export type PostShareUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PostShares.
+     */
+    data: XOR<PostShareUpdateManyMutationInput, PostShareUncheckedUpdateManyInput>
+    /**
+     * Filter which PostShares to update
+     */
+    where?: PostShareWhereInput
+  }
+
+  /**
+   * PostShare upsert
+   */
+  export type PostShareUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelect<ExtArgs> | null
+    /**
+     * The filter to search for the PostShare to update in case it exists.
+     */
+    where: PostShareWhereUniqueInput
+    /**
+     * In case the PostShare found by the `where` argument doesn't exist, create a new PostShare with this data.
+     */
+    create: XOR<PostShareCreateInput, PostShareUncheckedCreateInput>
+    /**
+     * In case the PostShare was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PostShareUpdateInput, PostShareUncheckedUpdateInput>
+  }
+
+  /**
+   * PostShare delete
+   */
+  export type PostShareDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelect<ExtArgs> | null
+    /**
+     * Filter which PostShare to delete.
+     */
+    where: PostShareWhereUniqueInput
+  }
+
+  /**
+   * PostShare deleteMany
+   */
+  export type PostShareDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PostShares to delete
+     */
+    where?: PostShareWhereInput
+  }
+
+  /**
+   * PostShare without action
+   */
+  export type PostShareDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PostShare
+     */
+    select?: PostShareSelect<ExtArgs> | null
   }
 
 
@@ -3895,6 +5990,11 @@ export namespace Prisma {
     likes: 'likes',
     commentsCount: 'commentsCount',
     shares: 'shares',
+    repostsCount: 'repostsCount',
+    visibility: 'visibility',
+    organizationId: 'organizationId',
+    repostOfId: 'repostOfId',
+    isQuote: 'isQuote',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -3910,6 +6010,26 @@ export namespace Prisma {
   };
 
   export type LikeScalarFieldEnum = (typeof LikeScalarFieldEnum)[keyof typeof LikeScalarFieldEnum]
+
+
+  export const ShareScalarFieldEnum: {
+    id: 'id',
+    postId: 'postId',
+    userId: 'userId',
+    createdAt: 'createdAt'
+  };
+
+  export type ShareScalarFieldEnum = (typeof ShareScalarFieldEnum)[keyof typeof ShareScalarFieldEnum]
+
+
+  export const PostShareScalarFieldEnum: {
+    id: 'id',
+    postId: 'postId',
+    shareToken: 'shareToken',
+    createdAt: 'createdAt'
+  };
+
+  export type PostShareScalarFieldEnum = (typeof PostShareScalarFieldEnum)[keyof typeof PostShareScalarFieldEnum]
 
 
   export const CommentScalarFieldEnum: {
@@ -3983,6 +6103,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -4024,8 +6151,15 @@ export namespace Prisma {
     likes?: IntFilter<"Post"> | number
     commentsCount?: IntFilter<"Post"> | number
     shares?: IntFilter<"Post"> | number
+    repostsCount?: IntFilter<"Post"> | number
+    visibility?: StringFilter<"Post"> | string
+    organizationId?: StringNullableFilter<"Post"> | string | null
+    repostOfId?: StringNullableFilter<"Post"> | string | null
+    isQuote?: BoolFilter<"Post"> | boolean
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
+    repostOf?: XOR<PostNullableRelationFilter, PostWhereInput> | null
+    reposts?: PostListRelationFilter
   }
 
   export type PostOrderByWithRelationInput = {
@@ -4036,8 +6170,15 @@ export namespace Prisma {
     likes?: SortOrder
     commentsCount?: SortOrder
     shares?: SortOrder
+    repostsCount?: SortOrder
+    visibility?: SortOrder
+    organizationId?: SortOrderInput | SortOrder
+    repostOfId?: SortOrderInput | SortOrder
+    isQuote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    repostOf?: PostOrderByWithRelationInput
+    reposts?: PostOrderByRelationAggregateInput
   }
 
   export type PostWhereUniqueInput = Prisma.AtLeast<{
@@ -4051,8 +6192,15 @@ export namespace Prisma {
     likes?: IntFilter<"Post"> | number
     commentsCount?: IntFilter<"Post"> | number
     shares?: IntFilter<"Post"> | number
+    repostsCount?: IntFilter<"Post"> | number
+    visibility?: StringFilter<"Post"> | string
+    organizationId?: StringNullableFilter<"Post"> | string | null
+    repostOfId?: StringNullableFilter<"Post"> | string | null
+    isQuote?: BoolFilter<"Post"> | boolean
     createdAt?: DateTimeFilter<"Post"> | Date | string
     updatedAt?: DateTimeFilter<"Post"> | Date | string
+    repostOf?: XOR<PostNullableRelationFilter, PostWhereInput> | null
+    reposts?: PostListRelationFilter
   }, "id">
 
   export type PostOrderByWithAggregationInput = {
@@ -4063,6 +6211,11 @@ export namespace Prisma {
     likes?: SortOrder
     commentsCount?: SortOrder
     shares?: SortOrder
+    repostsCount?: SortOrder
+    visibility?: SortOrder
+    organizationId?: SortOrderInput | SortOrder
+    repostOfId?: SortOrderInput | SortOrder
+    isQuote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: PostCountOrderByAggregateInput
@@ -4083,6 +6236,11 @@ export namespace Prisma {
     likes?: IntWithAggregatesFilter<"Post"> | number
     commentsCount?: IntWithAggregatesFilter<"Post"> | number
     shares?: IntWithAggregatesFilter<"Post"> | number
+    repostsCount?: IntWithAggregatesFilter<"Post"> | number
+    visibility?: StringWithAggregatesFilter<"Post"> | string
+    organizationId?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    repostOfId?: StringNullableWithAggregatesFilter<"Post"> | string | null
+    isQuote?: BoolWithAggregatesFilter<"Post"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Post"> | Date | string
   }
@@ -4133,6 +6291,101 @@ export namespace Prisma {
     postId?: StringWithAggregatesFilter<"Like"> | string
     userId?: StringWithAggregatesFilter<"Like"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Like"> | Date | string
+  }
+
+  export type ShareWhereInput = {
+    AND?: ShareWhereInput | ShareWhereInput[]
+    OR?: ShareWhereInput[]
+    NOT?: ShareWhereInput | ShareWhereInput[]
+    id?: StringFilter<"Share"> | string
+    postId?: StringFilter<"Share"> | string
+    userId?: StringFilter<"Share"> | string
+    createdAt?: DateTimeFilter<"Share"> | Date | string
+  }
+
+  export type ShareOrderByWithRelationInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ShareWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    postId_userId?: SharePostIdUserIdCompoundUniqueInput
+    AND?: ShareWhereInput | ShareWhereInput[]
+    OR?: ShareWhereInput[]
+    NOT?: ShareWhereInput | ShareWhereInput[]
+    postId?: StringFilter<"Share"> | string
+    userId?: StringFilter<"Share"> | string
+    createdAt?: DateTimeFilter<"Share"> | Date | string
+  }, "id" | "postId_userId">
+
+  export type ShareOrderByWithAggregationInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    _count?: ShareCountOrderByAggregateInput
+    _max?: ShareMaxOrderByAggregateInput
+    _min?: ShareMinOrderByAggregateInput
+  }
+
+  export type ShareScalarWhereWithAggregatesInput = {
+    AND?: ShareScalarWhereWithAggregatesInput | ShareScalarWhereWithAggregatesInput[]
+    OR?: ShareScalarWhereWithAggregatesInput[]
+    NOT?: ShareScalarWhereWithAggregatesInput | ShareScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Share"> | string
+    postId?: StringWithAggregatesFilter<"Share"> | string
+    userId?: StringWithAggregatesFilter<"Share"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Share"> | Date | string
+  }
+
+  export type PostShareWhereInput = {
+    AND?: PostShareWhereInput | PostShareWhereInput[]
+    OR?: PostShareWhereInput[]
+    NOT?: PostShareWhereInput | PostShareWhereInput[]
+    id?: StringFilter<"PostShare"> | string
+    postId?: StringFilter<"PostShare"> | string
+    shareToken?: StringFilter<"PostShare"> | string
+    createdAt?: DateTimeFilter<"PostShare"> | Date | string
+  }
+
+  export type PostShareOrderByWithRelationInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    shareToken?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PostShareWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    postId?: string
+    shareToken?: string
+    AND?: PostShareWhereInput | PostShareWhereInput[]
+    OR?: PostShareWhereInput[]
+    NOT?: PostShareWhereInput | PostShareWhereInput[]
+    createdAt?: DateTimeFilter<"PostShare"> | Date | string
+  }, "id" | "postId" | "shareToken">
+
+  export type PostShareOrderByWithAggregationInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    shareToken?: SortOrder
+    createdAt?: SortOrder
+    _count?: PostShareCountOrderByAggregateInput
+    _max?: PostShareMaxOrderByAggregateInput
+    _min?: PostShareMinOrderByAggregateInput
+  }
+
+  export type PostShareScalarWhereWithAggregatesInput = {
+    AND?: PostShareScalarWhereWithAggregatesInput | PostShareScalarWhereWithAggregatesInput[]
+    OR?: PostShareScalarWhereWithAggregatesInput[]
+    NOT?: PostShareScalarWhereWithAggregatesInput | PostShareScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PostShare"> | string
+    postId?: StringWithAggregatesFilter<"PostShare"> | string
+    shareToken?: StringWithAggregatesFilter<"PostShare"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PostShare"> | Date | string
   }
 
   export type CommentWhereInput = {
@@ -4211,8 +6464,14 @@ export namespace Prisma {
     likes?: number
     commentsCount?: number
     shares?: number
+    repostsCount?: number
+    visibility?: string
+    organizationId?: string | null
+    isQuote?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    repostOf?: PostCreateNestedOneWithoutRepostsInput
+    reposts?: PostCreateNestedManyWithoutRepostOfInput
   }
 
   export type PostUncheckedCreateInput = {
@@ -4223,8 +6482,14 @@ export namespace Prisma {
     likes?: number
     commentsCount?: number
     shares?: number
+    repostsCount?: number
+    visibility?: string
+    organizationId?: string | null
+    repostOfId?: string | null
+    isQuote?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
+    reposts?: PostUncheckedCreateNestedManyWithoutRepostOfInput
   }
 
   export type PostUpdateInput = {
@@ -4235,8 +6500,14 @@ export namespace Prisma {
     likes?: IntFieldUpdateOperationsInput | number
     commentsCount?: IntFieldUpdateOperationsInput | number
     shares?: IntFieldUpdateOperationsInput | number
+    repostsCount?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    isQuote?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repostOf?: PostUpdateOneWithoutRepostsNestedInput
+    reposts?: PostUpdateManyWithoutRepostOfNestedInput
   }
 
   export type PostUncheckedUpdateInput = {
@@ -4247,8 +6518,14 @@ export namespace Prisma {
     likes?: IntFieldUpdateOperationsInput | number
     commentsCount?: IntFieldUpdateOperationsInput | number
     shares?: IntFieldUpdateOperationsInput | number
+    repostsCount?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    repostOfId?: NullableStringFieldUpdateOperationsInput | string | null
+    isQuote?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reposts?: PostUncheckedUpdateManyWithoutRepostOfNestedInput
   }
 
   export type PostCreateManyInput = {
@@ -4259,6 +6536,11 @@ export namespace Prisma {
     likes?: number
     commentsCount?: number
     shares?: number
+    repostsCount?: number
+    visibility?: string
+    organizationId?: string | null
+    repostOfId?: string | null
+    isQuote?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -4271,6 +6553,10 @@ export namespace Prisma {
     likes?: IntFieldUpdateOperationsInput | number
     commentsCount?: IntFieldUpdateOperationsInput | number
     shares?: IntFieldUpdateOperationsInput | number
+    repostsCount?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    isQuote?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4283,6 +6569,11 @@ export namespace Prisma {
     likes?: IntFieldUpdateOperationsInput | number
     commentsCount?: IntFieldUpdateOperationsInput | number
     shares?: IntFieldUpdateOperationsInput | number
+    repostsCount?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    repostOfId?: NullableStringFieldUpdateOperationsInput | string | null
+    isQuote?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -4333,6 +6624,104 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     postId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareCreateInput = {
+    id?: string
+    postId: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type ShareUncheckedCreateInput = {
+    id?: string
+    postId: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type ShareUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareCreateManyInput = {
+    id?: string
+    postId: string
+    userId: string
+    createdAt?: Date | string
+  }
+
+  export type ShareUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShareUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostShareCreateInput = {
+    id?: string
+    postId: string
+    shareToken: string
+    createdAt?: Date | string
+  }
+
+  export type PostShareUncheckedCreateInput = {
+    id?: string
+    postId: string
+    shareToken: string
+    createdAt?: Date | string
+  }
+
+  export type PostShareUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    shareToken?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostShareUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    shareToken?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostShareCreateManyInput = {
+    id?: string
+    postId: string
+    shareToken: string
+    createdAt?: Date | string
+  }
+
+  export type PostShareUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    shareToken?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostShareUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    postId?: StringFieldUpdateOperationsInput | string
+    shareToken?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -4443,6 +6832,26 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -4454,6 +6863,26 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type PostNullableRelationFilter = {
+    is?: PostWhereInput | null
+    isNot?: PostWhereInput | null
+  }
+
+  export type PostListRelationFilter = {
+    every?: PostWhereInput
+    some?: PostWhereInput
+    none?: PostWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type PostOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type PostCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
@@ -4462,6 +6891,11 @@ export namespace Prisma {
     likes?: SortOrder
     commentsCount?: SortOrder
     shares?: SortOrder
+    repostsCount?: SortOrder
+    visibility?: SortOrder
+    organizationId?: SortOrder
+    repostOfId?: SortOrder
+    isQuote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4470,6 +6904,7 @@ export namespace Prisma {
     likes?: SortOrder
     commentsCount?: SortOrder
     shares?: SortOrder
+    repostsCount?: SortOrder
   }
 
   export type PostMaxOrderByAggregateInput = {
@@ -4479,6 +6914,11 @@ export namespace Prisma {
     likes?: SortOrder
     commentsCount?: SortOrder
     shares?: SortOrder
+    repostsCount?: SortOrder
+    visibility?: SortOrder
+    organizationId?: SortOrder
+    repostOfId?: SortOrder
+    isQuote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4490,6 +6930,11 @@ export namespace Prisma {
     likes?: SortOrder
     commentsCount?: SortOrder
     shares?: SortOrder
+    repostsCount?: SortOrder
+    visibility?: SortOrder
+    organizationId?: SortOrder
+    repostOfId?: SortOrder
+    isQuote?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -4498,6 +6943,7 @@ export namespace Prisma {
     likes?: SortOrder
     commentsCount?: SortOrder
     shares?: SortOrder
+    repostsCount?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -4532,6 +6978,32 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
@@ -4574,19 +7046,51 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  export type SharePostIdUserIdCompoundUniqueInput = {
+    postId: string
+    userId: string
+  }
+
+  export type ShareCountOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ShareMaxOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ShareMinOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PostShareCountOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    shareToken?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PostShareMaxOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    shareToken?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PostShareMinOrderByAggregateInput = {
+    id?: SortOrder
+    postId?: SortOrder
+    shareToken?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type CommentNullableRelationFilter = {
@@ -4598,11 +7102,6 @@ export namespace Prisma {
     every?: CommentWhereInput
     some?: CommentWhereInput
     none?: CommentWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type CommentOrderByRelationAggregateInput = {
@@ -4639,26 +7138,28 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
   export type PostCreatemediaInput = {
     set: string[]
+  }
+
+  export type PostCreateNestedOneWithoutRepostsInput = {
+    create?: XOR<PostCreateWithoutRepostsInput, PostUncheckedCreateWithoutRepostsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutRepostsInput
+    connect?: PostWhereUniqueInput
+  }
+
+  export type PostCreateNestedManyWithoutRepostOfInput = {
+    create?: XOR<PostCreateWithoutRepostOfInput, PostUncheckedCreateWithoutRepostOfInput> | PostCreateWithoutRepostOfInput[] | PostUncheckedCreateWithoutRepostOfInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutRepostOfInput | PostCreateOrConnectWithoutRepostOfInput[]
+    createMany?: PostCreateManyRepostOfInputEnvelope
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+  }
+
+  export type PostUncheckedCreateNestedManyWithoutRepostOfInput = {
+    create?: XOR<PostCreateWithoutRepostOfInput, PostUncheckedCreateWithoutRepostOfInput> | PostCreateWithoutRepostOfInput[] | PostUncheckedCreateWithoutRepostOfInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutRepostOfInput | PostCreateOrConnectWithoutRepostOfInput[]
+    createMany?: PostCreateManyRepostOfInputEnvelope
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -4678,8 +7179,54 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type PostUpdateOneWithoutRepostsNestedInput = {
+    create?: XOR<PostCreateWithoutRepostsInput, PostUncheckedCreateWithoutRepostsInput>
+    connectOrCreate?: PostCreateOrConnectWithoutRepostsInput
+    upsert?: PostUpsertWithoutRepostsInput
+    disconnect?: PostWhereInput | boolean
+    delete?: PostWhereInput | boolean
+    connect?: PostWhereUniqueInput
+    update?: XOR<XOR<PostUpdateToOneWithWhereWithoutRepostsInput, PostUpdateWithoutRepostsInput>, PostUncheckedUpdateWithoutRepostsInput>
+  }
+
+  export type PostUpdateManyWithoutRepostOfNestedInput = {
+    create?: XOR<PostCreateWithoutRepostOfInput, PostUncheckedCreateWithoutRepostOfInput> | PostCreateWithoutRepostOfInput[] | PostUncheckedCreateWithoutRepostOfInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutRepostOfInput | PostCreateOrConnectWithoutRepostOfInput[]
+    upsert?: PostUpsertWithWhereUniqueWithoutRepostOfInput | PostUpsertWithWhereUniqueWithoutRepostOfInput[]
+    createMany?: PostCreateManyRepostOfInputEnvelope
+    set?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    disconnect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    delete?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    update?: PostUpdateWithWhereUniqueWithoutRepostOfInput | PostUpdateWithWhereUniqueWithoutRepostOfInput[]
+    updateMany?: PostUpdateManyWithWhereWithoutRepostOfInput | PostUpdateManyWithWhereWithoutRepostOfInput[]
+    deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
+  }
+
+  export type PostUncheckedUpdateManyWithoutRepostOfNestedInput = {
+    create?: XOR<PostCreateWithoutRepostOfInput, PostUncheckedCreateWithoutRepostOfInput> | PostCreateWithoutRepostOfInput[] | PostUncheckedCreateWithoutRepostOfInput[]
+    connectOrCreate?: PostCreateOrConnectWithoutRepostOfInput | PostCreateOrConnectWithoutRepostOfInput[]
+    upsert?: PostUpsertWithWhereUniqueWithoutRepostOfInput | PostUpsertWithWhereUniqueWithoutRepostOfInput[]
+    createMany?: PostCreateManyRepostOfInputEnvelope
+    set?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    disconnect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    delete?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    connect?: PostWhereUniqueInput | PostWhereUniqueInput[]
+    update?: PostUpdateWithWhereUniqueWithoutRepostOfInput | PostUpdateWithWhereUniqueWithoutRepostOfInput[]
+    updateMany?: PostUpdateManyWithWhereWithoutRepostOfInput | PostUpdateManyWithWhereWithoutRepostOfInput[]
+    deleteMany?: PostScalarWhereInput | PostScalarWhereInput[]
   }
 
   export type CommentCreateNestedOneWithoutRepliesInput = {
@@ -4726,10 +7273,6 @@ export namespace Prisma {
     deleteMany?: CommentScalarWhereInput | CommentScalarWhereInput[]
   }
 
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
   export type CommentUncheckedUpdateManyWithoutParentNestedInput = {
     create?: XOR<CommentCreateWithoutParentInput, CommentUncheckedCreateWithoutParentInput> | CommentCreateWithoutParentInput[] | CommentUncheckedCreateWithoutParentInput[]
     connectOrCreate?: CommentCreateOrConnectWithoutParentInput | CommentCreateOrConnectWithoutParentInput[]
@@ -4767,6 +7310,25 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -4824,34 +7386,6 @@ export namespace Prisma {
     not?: NestedFloatFilter<$PrismaModel> | number
   }
 
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type NestedStringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -4878,6 +7412,192 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type PostCreateWithoutRepostsInput = {
+    id?: string
+    userId: string
+    content: string
+    media?: PostCreatemediaInput | string[]
+    likes?: number
+    commentsCount?: number
+    shares?: number
+    repostsCount?: number
+    visibility?: string
+    organizationId?: string | null
+    isQuote?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repostOf?: PostCreateNestedOneWithoutRepostsInput
+  }
+
+  export type PostUncheckedCreateWithoutRepostsInput = {
+    id?: string
+    userId: string
+    content: string
+    media?: PostCreatemediaInput | string[]
+    likes?: number
+    commentsCount?: number
+    shares?: number
+    repostsCount?: number
+    visibility?: string
+    organizationId?: string | null
+    repostOfId?: string | null
+    isQuote?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostCreateOrConnectWithoutRepostsInput = {
+    where: PostWhereUniqueInput
+    create: XOR<PostCreateWithoutRepostsInput, PostUncheckedCreateWithoutRepostsInput>
+  }
+
+  export type PostCreateWithoutRepostOfInput = {
+    id?: string
+    userId: string
+    content: string
+    media?: PostCreatemediaInput | string[]
+    likes?: number
+    commentsCount?: number
+    shares?: number
+    repostsCount?: number
+    visibility?: string
+    organizationId?: string | null
+    isQuote?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reposts?: PostCreateNestedManyWithoutRepostOfInput
+  }
+
+  export type PostUncheckedCreateWithoutRepostOfInput = {
+    id?: string
+    userId: string
+    content: string
+    media?: PostCreatemediaInput | string[]
+    likes?: number
+    commentsCount?: number
+    shares?: number
+    repostsCount?: number
+    visibility?: string
+    organizationId?: string | null
+    isQuote?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    reposts?: PostUncheckedCreateNestedManyWithoutRepostOfInput
+  }
+
+  export type PostCreateOrConnectWithoutRepostOfInput = {
+    where: PostWhereUniqueInput
+    create: XOR<PostCreateWithoutRepostOfInput, PostUncheckedCreateWithoutRepostOfInput>
+  }
+
+  export type PostCreateManyRepostOfInputEnvelope = {
+    data: PostCreateManyRepostOfInput | PostCreateManyRepostOfInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PostUpsertWithoutRepostsInput = {
+    update: XOR<PostUpdateWithoutRepostsInput, PostUncheckedUpdateWithoutRepostsInput>
+    create: XOR<PostCreateWithoutRepostsInput, PostUncheckedCreateWithoutRepostsInput>
+    where?: PostWhereInput
+  }
+
+  export type PostUpdateToOneWithWhereWithoutRepostsInput = {
+    where?: PostWhereInput
+    data: XOR<PostUpdateWithoutRepostsInput, PostUncheckedUpdateWithoutRepostsInput>
+  }
+
+  export type PostUpdateWithoutRepostsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    media?: PostUpdatemediaInput | string[]
+    likes?: IntFieldUpdateOperationsInput | number
+    commentsCount?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
+    repostsCount?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    isQuote?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repostOf?: PostUpdateOneWithoutRepostsNestedInput
+  }
+
+  export type PostUncheckedUpdateWithoutRepostsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    media?: PostUpdatemediaInput | string[]
+    likes?: IntFieldUpdateOperationsInput | number
+    commentsCount?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
+    repostsCount?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    repostOfId?: NullableStringFieldUpdateOperationsInput | string | null
+    isQuote?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PostUpsertWithWhereUniqueWithoutRepostOfInput = {
+    where: PostWhereUniqueInput
+    update: XOR<PostUpdateWithoutRepostOfInput, PostUncheckedUpdateWithoutRepostOfInput>
+    create: XOR<PostCreateWithoutRepostOfInput, PostUncheckedCreateWithoutRepostOfInput>
+  }
+
+  export type PostUpdateWithWhereUniqueWithoutRepostOfInput = {
+    where: PostWhereUniqueInput
+    data: XOR<PostUpdateWithoutRepostOfInput, PostUncheckedUpdateWithoutRepostOfInput>
+  }
+
+  export type PostUpdateManyWithWhereWithoutRepostOfInput = {
+    where: PostScalarWhereInput
+    data: XOR<PostUpdateManyMutationInput, PostUncheckedUpdateManyWithoutRepostOfInput>
+  }
+
+  export type PostScalarWhereInput = {
+    AND?: PostScalarWhereInput | PostScalarWhereInput[]
+    OR?: PostScalarWhereInput[]
+    NOT?: PostScalarWhereInput | PostScalarWhereInput[]
+    id?: StringFilter<"Post"> | string
+    userId?: StringFilter<"Post"> | string
+    content?: StringFilter<"Post"> | string
+    media?: StringNullableListFilter<"Post">
+    likes?: IntFilter<"Post"> | number
+    commentsCount?: IntFilter<"Post"> | number
+    shares?: IntFilter<"Post"> | number
+    repostsCount?: IntFilter<"Post"> | number
+    visibility?: StringFilter<"Post"> | string
+    organizationId?: StringNullableFilter<"Post"> | string | null
+    repostOfId?: StringNullableFilter<"Post"> | string | null
+    isQuote?: BoolFilter<"Post"> | boolean
+    createdAt?: DateTimeFilter<"Post"> | Date | string
+    updatedAt?: DateTimeFilter<"Post"> | Date | string
   }
 
   export type CommentCreateWithoutRepliesInput = {
@@ -4995,6 +7715,72 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Comment"> | Date | string
   }
 
+  export type PostCreateManyRepostOfInput = {
+    id?: string
+    userId: string
+    content: string
+    media?: PostCreatemediaInput | string[]
+    likes?: number
+    commentsCount?: number
+    shares?: number
+    repostsCount?: number
+    visibility?: string
+    organizationId?: string | null
+    isQuote?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PostUpdateWithoutRepostOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    media?: PostUpdatemediaInput | string[]
+    likes?: IntFieldUpdateOperationsInput | number
+    commentsCount?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
+    repostsCount?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    isQuote?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reposts?: PostUpdateManyWithoutRepostOfNestedInput
+  }
+
+  export type PostUncheckedUpdateWithoutRepostOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    media?: PostUpdatemediaInput | string[]
+    likes?: IntFieldUpdateOperationsInput | number
+    commentsCount?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
+    repostsCount?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    isQuote?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    reposts?: PostUncheckedUpdateManyWithoutRepostOfNestedInput
+  }
+
+  export type PostUncheckedUpdateManyWithoutRepostOfInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    content?: StringFieldUpdateOperationsInput | string
+    media?: PostUpdatemediaInput | string[]
+    likes?: IntFieldUpdateOperationsInput | number
+    commentsCount?: IntFieldUpdateOperationsInput | number
+    shares?: IntFieldUpdateOperationsInput | number
+    repostsCount?: IntFieldUpdateOperationsInput | number
+    visibility?: StringFieldUpdateOperationsInput | string
+    organizationId?: NullableStringFieldUpdateOperationsInput | string | null
+    isQuote?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type CommentCreateManyParentInput = {
     id?: string
     postId: string
@@ -5039,6 +7825,10 @@ export namespace Prisma {
    * Aliases for legacy arg types
    */
     /**
+     * @deprecated Use PostCountOutputTypeDefaultArgs instead
+     */
+    export type PostCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PostCountOutputTypeDefaultArgs<ExtArgs>
+    /**
      * @deprecated Use CommentCountOutputTypeDefaultArgs instead
      */
     export type CommentCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = CommentCountOutputTypeDefaultArgs<ExtArgs>
@@ -5050,6 +7840,14 @@ export namespace Prisma {
      * @deprecated Use LikeDefaultArgs instead
      */
     export type LikeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LikeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ShareDefaultArgs instead
+     */
+    export type ShareArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ShareDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PostShareDefaultArgs instead
+     */
+    export type PostShareArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PostShareDefaultArgs<ExtArgs>
     /**
      * @deprecated Use CommentDefaultArgs instead
      */

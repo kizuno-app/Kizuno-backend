@@ -16,6 +16,9 @@ router.patch('/me', requireAuth, UserController.updateProfile);
 router.post('/upload', requireAuth, upload.single('image'), UserController.uploadImage);
 router.delete('/me', requireAuth, UserController.deleteProfile);
 
+// Org account discovery
+router.get('/org-accounts/trending', UserController.getTrendingOrgAccounts);
+
 // Public profile route
 router.get('/:userId', requireAuth, UserController.getProfile);
 

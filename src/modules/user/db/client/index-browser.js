@@ -136,6 +136,11 @@ exports.Prisma.ProfileScalarFieldEnum = {
   college: 'college',
   branch: 'branch',
   year: 'year',
+  organizationId: 'organizationId',
+  organizationRole: 'organizationRole',
+  joinedOrgAt: 'joinedOrgAt',
+  isOrgAccount: 'isOrgAccount',
+  verified: 'verified',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

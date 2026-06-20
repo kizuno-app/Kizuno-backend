@@ -1,0 +1,30 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["email"]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+  output          = "../client"
+}
+
+model EmailLog {
+  id           String    @id @default(uuid())
+  recipient    String
+  subject      String
+  template     String
+  status       String    @default("PENDING")  // PENDING, PROCESSING, SENT, FAILED, RETRYING
+  resendId     String?                        // Resend API message ID
+  failedReason String?
+  retryCount   Int       @default(0)
+  sentAt       DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([recipient])
+  @@index([status])
+  @@index([createdAt(sort: Desc)])
+  @@schema("email")
+}

@@ -11,6 +11,8 @@ import { PrismaClient as UserPrismaClient } from './modules/user/db/client';
 
 // Initialize BullMQ workers
 import './shared/queue/image-cleanup.queue';
+import './modules/email/queue/email.queue';
+import { registrationCleanupQueue } from './modules/organization/queue/registration-cleanup.queue';
 
 const server = createServer(app);
 const io = new Server(server, {
@@ -97,6 +99,21 @@ warmUpDatabase()
   .finally(() => {
     server.listen(config.port, () => {
       console.log(`[Server] Server is running on port ${config.port} in ${config.nodeEnv} mode`);
+      
+      // Schedule the repeatable cleanup job to run every hour
+      registrationCleanupQueue.add(
+        'check-incomplete-registrations',
+        {},
+        {
+          repeat: {
+            pattern: '0 * * * *', // Every hour
+          },
+        }
+      ).then(() => {
+        console.log('[Server] Successfully scheduled hourly registration cleanup job');
+      }).catch((err) => {
+        console.error('[Server] Failed to schedule registration cleanup job:', err);
+      });
     });
   });
 
@@ -107,3 +124,5 @@ process.on('SIGTERM', () => {
     console.log('HTTP server closed');
   });
 });
+// Hot reload trigger for environment variables
+

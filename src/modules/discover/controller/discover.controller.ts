@@ -4,7 +4,8 @@ import { DiscoverService } from '../services/discover.service';
 export class DiscoverController {
   static async getTrending(req: Request, res: Response, next: NextFunction) {
     try {
-      const trending = await DiscoverService.getTrendingPosts();
+      const organizationId = req.user?.organizationId;
+      const trending = await DiscoverService.getTrendingPosts(10, organizationId);
       res.status(200).json({ status: 'success', data: trending });
     } catch (error) {
       next(error);

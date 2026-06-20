@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const modules = ['auth', 'user', 'post', 'feed', 'connection', 'chat', 'notification', 'discover'];
+const modules = ['auth', 'user', 'post', 'feed', 'connection', 'chat', 'notification', 'discover', 'organization', 'report'];
 
 modules.forEach(mod => {
   const schemaPath = path.join(__dirname, 'src', 'modules', mod, 'db', 'schema', 'schema.prisma');

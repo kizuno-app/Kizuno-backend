@@ -11,15 +11,25 @@ generator client {
 }
 
 model Post {
-  id            String   @id @default(uuid())
-  userId        String
-  content       String
-  media         String[]
-  likes         Int      @default(0)
-  commentsCount Int      @default(0)
-  shares        Int      @default(0)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id             String   @id @default(uuid())
+  userId         String
+  content        String
+  media          String[]
+  likes          Int      @default(0)
+  commentsCount  Int      @default(0)
+  shares         Int      @default(0)
+  repostsCount   Int      @default(0)
+  visibility     String   @default("PUBLIC")
+  organizationId String?
+
+  // Repost / Quote-post relation
+  repostOfId String?
+  isQuote    Boolean @default(false)
+  repostOf   Post?   @relation("Reposts", fields: [repostOfId], references: [id], onDelete: SetNull)
+  reposts    Post[]  @relation("Reposts")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@schema("post")
 }
@@ -31,6 +41,26 @@ model Like {
   createdAt DateTime @default(now())
 
   @@unique([postId, userId])
+  @@schema("post")
+}
+
+model Share {
+  id        String   @id @default(uuid())
+  postId    String
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@unique([postId, userId])
+  @@schema("post")
+}
+
+model PostShare {
+  id         String   @id @default(uuid())
+  postId     String   @unique
+  shareToken String   @unique
+  createdAt  DateTime @default(now())
+
+  @@index([shareToken])
   @@schema("post")
 }
 

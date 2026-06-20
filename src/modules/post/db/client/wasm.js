@@ -130,6 +130,11 @@ exports.Prisma.PostScalarFieldEnum = {
   likes: 'likes',
   commentsCount: 'commentsCount',
   shares: 'shares',
+  repostsCount: 'repostsCount',
+  visibility: 'visibility',
+  organizationId: 'organizationId',
+  repostOfId: 'repostOfId',
+  isQuote: 'isQuote',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -138,6 +143,20 @@ exports.Prisma.LikeScalarFieldEnum = {
   id: 'id',
   postId: 'postId',
   userId: 'userId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ShareScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  userId: 'userId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PostShareScalarFieldEnum = {
+  id: 'id',
+  postId: 'postId',
+  shareToken: 'shareToken',
   createdAt: 'createdAt'
 };
 
@@ -170,6 +189,8 @@ exports.Prisma.NullsOrder = {
 exports.Prisma.ModelName = {
   Post: 'Post',
   Like: 'Like',
+  Share: 'Share',
+  PostShare: 'PostShare',
   Comment: 'Comment'
 };
 

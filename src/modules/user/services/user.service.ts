@@ -2,6 +2,7 @@ import { PrismaClient } from '../db/client';
 import { UpdateProfileDtoType } from '../dto/user.dto';
 import { eventBus, CoreEvents } from '../../../shared/events';
 import { cloudinaryCleanupQueue } from '../../../shared/queue/image-cleanup.queue';
+import { OrganizationService } from '../../organization/services/organization.service';
 
 const globalForPrismaUser = global as unknown as { prismaUser: PrismaClient };
 const prisma = globalForPrismaUser.prismaUser || new PrismaClient();
@@ -9,14 +10,45 @@ if (process.env.NODE_ENV !== 'production') globalForPrismaUser.prismaUser = pris
 
 export class UserService {
   // Method called when USER_REGISTERED event is received
-  static async createInitialProfile(data: { userId: string; firstName: string; lastName: string }) {
+  static async createInitialProfile(data: { userId: string; email: string; firstName: string; lastName: string }) {
+    let organizationId = null;
+    let organizationRole = null;
+    let joinedOrgAt = null;
+
+    if (data.email) {
+      const parts = data.email.split('@');
+      if (parts.length === 2) {
+        const domain = parts[1];
+        try {
+          const activeOrg = await OrganizationService.findActiveOrgByDomain(domain);
+          if (activeOrg) {
+            organizationId = activeOrg.id;
+            organizationRole = 'MEMBER';
+            joinedOrgAt = new Date();
+          }
+        } catch (error) {
+          console.error('[UserModule] Failed to resolve organization for domain', error);
+        }
+      }
+    }
+
     await prisma.profile.create({
       data: {
         userId: data.userId,
         firstName: data.firstName,
         lastName: data.lastName,
+        organizationId,
+        organizationRole,
+        joinedOrgAt
       },
     });
+
+    if (organizationId) {
+      eventBus.publish('ORGANIZATION_JOINED', {
+        userId: data.userId,
+        organizationId: organizationId,
+      });
+    }
   }
 
   static async checkUsernameAvailable(username: string) {
@@ -43,6 +75,19 @@ export class UserService {
     const oldProfile = await prisma.profile.findUnique({
       where: { userId },
     });
+
+    if (!oldProfile) {
+      throw { statusCode: 404, message: 'Profile record not found. Please log out and register again or contact support.' };
+    }
+
+    if (data.username) {
+      const existingWithUsername = await prisma.profile.findUnique({
+        where: { username: data.username },
+      });
+      if (existingWithUsername && existingWithUsername.userId !== userId) {
+        throw { statusCode: 400, message: 'Username is already taken' };
+      }
+    }
 
     const profile = await prisma.profile.update({
       where: { userId },
@@ -111,6 +156,14 @@ export class UserService {
   static async getProfilesByIds(userIds: string[]) {
     return prisma.profile.findMany({
       where: { userId: { in: userIds } }
+    });
+  }
+
+  static async getTrendingOrgAccounts(limit: number = 10) {
+    return prisma.profile.findMany({
+      where: { isOrgAccount: true },
+      take: limit,
+      orderBy: { createdAt: 'desc' }
     });
   }
 }

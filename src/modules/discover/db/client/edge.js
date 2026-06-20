@@ -135,12 +135,15 @@ const config = {
         "native": true
       }
     ],
-    "previewFeatures": [],
+    "previewFeatures": [
+      "multiSchema"
+    ],
     "sourceFilePath": "D:\\CampusConnect\\campus-connect-backend\\src\\modules\\discover\\db\\schema\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null
+    "rootEnvPath": null,
+    "schemaEnvPath": "../../../../../.env"
   },
   "relativePath": "../schema",
   "clientVersion": "5.22.0",
@@ -158,8 +161,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../client\"\n}\n\nmodel DiscoverTopic {\n  id        String   @id @default(uuid())\n  name      String   @unique\n  score     Float    @default(0)\n  updatedAt DateTime @updatedAt\n}\n",
-  "inlineSchemaHash": "8324d14d275180e04c0738b89e6767299f93026b03da02c81857bedc07d3c881",
+  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n  schemas  = [\"discover\"]\n}\n\ngenerator client {\n  provider        = \"prisma-client-js\"\n  previewFeatures = [\"multiSchema\"]\n  output          = \"../client\"\n}\n\nmodel DiscoverTopic {\n  id        String   @id @default(uuid())\n  name      String   @unique\n  score     Float    @default(0)\n  updatedAt DateTime @updatedAt\n\n  @@schema(\"discover\")\n}\n",
+  "inlineSchemaHash": "5d6af6d958dddbc5aefbe0966f8ede37ffdf4e6cf49d31a66d3578f9441f2244",
   "copyEngine": true
 }
 config.dirname = '/'

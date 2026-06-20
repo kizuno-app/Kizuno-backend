@@ -1,0 +1,70 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["organization"]
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+  output          = "../client"
+}
+
+model Organization {
+  id                String   @id @default(uuid())
+  name              String
+  type              String
+  description       String?
+  website           String?
+  officialEmail     String
+  location          String?
+  logoUrl           String?
+  bannerUrl         String?
+  expectedUsers     Int?
+  status            String   @default("PENDING")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  billingCustomerId String?
+  billingTier       String?
+  optOutVirality    Boolean  @default(false)
+
+  domains OrganizationDomain[]
+
+  @@schema("organization")
+}
+
+model OrganizationDomain {
+  id             String   @id @default(uuid())
+  organizationId String
+  domain         String   @unique
+  addedAt        DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id])
+
+  @@schema("organization")
+}
+
+model OrganizationApplication {
+  id                 String    @id @default(uuid())
+  applicantUserId    String
+  applicantName      String
+  applicantPhone     String
+  proofFileUrl       String?
+  name               String
+  type               String
+  location           String?
+  website            String?
+  description        String?
+  officialEmail      String
+  expectedUsers      Int?
+  domains            String[] // Array of strings for requested domains
+  logoUrl            String?
+  orgAccountName     String?
+  orgAccountUsername String?
+  status             String    @default("PENDING") // PENDING, APPROVED, REJECTED
+  submittedAt        DateTime  @default(now())
+  reviewedAt         DateTime?
+  reviewedBy         String? // Admin User ID who reviewed
+
+  @@schema("organization")
+}

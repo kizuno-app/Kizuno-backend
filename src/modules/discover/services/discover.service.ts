@@ -4,10 +4,9 @@ import { UserService } from '../../user/services/user.service';
 import { ConnectionService } from '../../connection/services/connection.service';
 
 export class DiscoverService {
-  static async getTrendingPosts(limit = 10) {
-    // In a real scenario, this would use a background job to aggregate top posts by likes/velocity in the last 24h
-    // For now, we simulate fetching trending posts using a predefined Redis sorted set 'trending:posts'
-    const postIds = await redisClient.zrevrange('trending:posts', 0, limit - 1);
+  static async getTrendingPosts(limit = 10, organizationId?: string) {
+    const key = organizationId ? `feed:org:${organizationId}` : 'feed:global:trending';
+    const postIds = await redisClient.zrevrange(key, 0, limit - 1);
     
     if (postIds.length === 0) {
       return [];
@@ -49,19 +48,26 @@ export class DiscoverService {
       suggestedProfiles.push(...additionalProfiles);
     }
 
-    // Format output
-    return suggestedProfiles.map(profile => ({
-      id: profile.userId,
-      firstName: profile.firstName,
-      lastName: profile.lastName,
-      avatar: profile.avatar,
-      bio: profile.bio,
-      skills: profile.skills,
-      college: profile.college,
-      branch: profile.branch,
-      year: profile.year,
-      isFollowing: false, // They are explicitly excluded from followings
-      mutualConnections: mutualCounts.get(profile.userId) || 0
+    // Format user output (org accounts are just profiles with isOrgAccount=true)
+    const formattedUsers = suggestedProfiles.map(profile => ({
+      type: 'user',
+      data: {
+        id: profile.userId,
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        avatar: profile.avatar,
+        bio: profile.bio,
+        skills: profile.skills,
+        college: profile.college,
+        branch: profile.branch,
+        year: profile.year,
+        isOrgAccount: profile.isOrgAccount || false,
+        verified: profile.verified || false,
+        isFollowing: false,
+        mutualConnections: mutualCounts.get(profile.userId) || 0
+      }
     }));
+
+    return formattedUsers;
   }
 }

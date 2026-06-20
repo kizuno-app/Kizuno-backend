@@ -1,11 +1,13 @@
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["discover"]
 }
 
 generator client {
-  provider = "prisma-client-js"
-  output   = "../client"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+  output          = "../client"
 }
 
 model DiscoverTopic {
@@ -13,4 +15,6 @@ model DiscoverTopic {
   name      String   @unique
   score     Float    @default(0)
   updatedAt DateTime @updatedAt
+
+  @@schema("discover")
 }

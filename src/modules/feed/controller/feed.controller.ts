@@ -5,12 +5,14 @@ export class FeedController {
   static async getFeed(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.user?.userId;
+      const organizationId = req.user?.organizationId;
       if (!userId) throw { statusCode: 401, message: 'Unauthorized' };
 
       const limit = parseInt(req.query.limit as string) || 20;
       const offset = parseInt(req.query.offset as string) || 0;
+      const seenIds = req.query.seenIds ? (req.query.seenIds as string).split(',').filter(Boolean) : [];
 
-      const feed = await FeedService.generateFeed(userId, limit, offset);
+      const feed = await FeedService.generateFeed(userId, organizationId, limit, offset, seenIds);
       res.status(200).json({ status: 'success', data: feed });
     } catch (error) {
       next(error);

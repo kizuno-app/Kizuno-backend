@@ -57,4 +57,51 @@ export const setupNotificationEventSubscribers = () => {
       console.error(e);
     }
   });
+
+  eventBus.subscribe('ORGANIZATION_JOINED', async (data: { userId: string; organizationId: string }) => {
+    try {
+      await NotificationService.createNotification({
+        userId: data.userId,
+        actorId: 'SYSTEM', // Or we can use the organization ID if actorId can be an org
+        type: NotificationType.ORGANIZATION_JOINED,
+        entityId: data.organizationId,
+        entityType: 'ORGANIZATION',
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
+  eventBus.subscribe('POST_PROMOTED_TO_GLOBAL', async (data: { postId: string; userId: string }) => {
+    try {
+      await NotificationService.createNotification({
+        userId: data.userId,
+        actorId: 'SYSTEM',
+        type: NotificationType.POST_PROMOTED_TO_GLOBAL,
+        entityId: data.postId,
+        entityType: 'POST',
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  });
+
+  eventBus.subscribe(CoreEvents.POST_CREATED, async (data: { postId: string; userId: string; post: any }) => {
+    try {
+      if (data.post && data.post.repostOfId) {
+        const originalPost = await PostService.getPost(data.post.repostOfId);
+        if (originalPost.userId !== data.userId) {
+          await NotificationService.createNotification({
+            userId: originalPost.userId,
+            actorId: data.userId,
+            type: data.post.isQuote ? NotificationType.QUOTE_POST : NotificationType.REPOST_POST,
+            entityId: data.post.id,
+            entityType: 'POST',
+          });
+        }
+      }
+    } catch (e) {
+      console.error('[NotificationSubscriber] Failed to handle POST_CREATED for repost/quote', e);
+    }
+  });
 };
