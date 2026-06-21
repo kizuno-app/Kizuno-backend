@@ -23,83 +23,28 @@ A Service-Isolated Modular Monolith for a modern social networking platform.
 4. Run `npm run prisma:generate`
 5. Run `npm run dev`
 
-## Direct Azure VM Deployment (Node.js & PM2)
+## Render Blueprint Deployment
 
-This backend can be run directly on your Azure VM using Node.js and daemonized with PM2.
+This backend is pre-configured to be deployed on **Render** using the provided `render.yaml` Blueprint specification.
 
-### Step 1: Install Node.js on your Azure VM
-If not already installed, run the following commands on your Ubuntu/Debian Azure VM (using Node Version Manager - NVM is recommended):
-```bash
-# Update package index and install build dependencies
-sudo apt update
-sudo apt install -y curl build-essential
+### Step 1: Push changes to GitHub
+Ensure you have pushed all your latest configuration changes to your GitHub repository.
 
-# Install NVM (Node Version Manager)
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+### Step 2: Deploy to Render
+1. Go to the **[Render Dashboard](https://dashboard.render.com/)**.
+2. Click **New +** and select **Blueprint**.
+3. Connect your GitHub repository.
+4. Render will detect the `render.yaml` file and parse the blueprint.
+5. In the configuration screen, you will need to fill in the required environment variables:
+   * `DATABASE_URL` (Main database connection URL)
+   * `CHAT_DATABASE_URL` (Chat module database connection URL)
+   * `UPSTASH_REDIS_REST_URL` (Your Upstash Redis connection URL, e.g., `rediss://...`)
+   * `CLIENT_URL` (Your production frontend app URL, e.g. `https://yourdomain.com`)
+   * `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` (For avatar/media uploads)
+   * `CHAT_CLOUDINARY_CLOUD_NAME`, `CHAT_CLOUDINARY_API_SECRET` (Optionally specify separate Cloudinary credentials for the chat, or copy the main one)
+   * `RESEND_API_KEY` (Your Resend credentials for sending automated transactional emails)
+6. Click **Approve** / **Apply** to start the deployment.
 
-# Load NVM into current shell session
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-# Install Node.js 18
-nvm install 18
-nvm use 18
-```
-
-### Step 2: Clone, Install Dependencies, & Generate Clients
-Clone your repository onto the Azure VM, navigate to the backend folder, and install all dependencies:
-```bash
-# Install all dependencies (including devDependencies like typescript)
-npm install
-```
-
-### Step 3: Configure Production Environment Variables
-Create a production `.env` file in the root of the backend directory:
-```bash
-nano .env
-```
-Ensure all required environment variables are filled in:
-* `PORT=3000`
-* `NODE_ENV=production`
-* `DATABASE_URL` (Main database connection URL)
-* `CHAT_DATABASE_URL` (Chat database connection URL)
-* `UPSTASH_REDIS_REST_URL` (Redis connection URL, e.g., `rediss://...`)
-* `JWT_SECRET` (Secure JWT secret string)
-* `CLIENT_URL` (Frontend URL)
-* `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` (For asset uploads)
-* `RESEND_API_KEY` (For sending emails)
-
-### Step 4: Generate Clients and Build the Application
-Run the Prisma generation script to generate the client engines natively for the VM's OS, then compile TypeScript into the `dist` folder:
-```bash
-# Generate all 11 database clients for Linux
-npm run prisma:generate
-
-# Compile TypeScript and copy clients
-npm run build
-```
-
-### Step 5: Start and Daemonize with PM2
-Install PM2 globally to keep the server running in the background and automatically restart it if it crashes:
-```bash
-# Install PM2 globally
-npm install -g pm2
-
-# Start the server
-pm2 start dist/server.js --name campus-connect-backend --env NODE_ENV=production --env PORT=3000
-
-# Set up PM2 to start automatically on VM reboot
-pm2 startup
-pm2 save
-```
-
-### Step 6: Verify Deployment
-Check the status of the running app and view logs:
-```bash
-# Check PM2 processes list
-pm2 status
-
-# View real-time logs
-pm2 logs campus-connect-backend
-```
-The server will run on port `3000` (or the PORT defined in your `.env`). Make sure to open port `3000` in your Azure Network Security Group (NSG) inbound rules to allow external connections, or proxy it through a web server like Nginx with SSL configuration.
+### Step 3: Verify Deployment
+* Render will automatically spin up a native Node.js 18 environment, download dependencies, run the Prisma generation, compile the TypeScript files, and start the production web service.
+* Once the deployment status turns green (**Live**), your server is active and accessible via the generated Render URL on port `3000`.

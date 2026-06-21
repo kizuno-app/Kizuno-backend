@@ -5,24 +5,40 @@ services:
   - type: web
     name: campus-connect-backend
     # Options: 'docker' (recommended for consistency) or 'node' (native Node.js deployment)
-    runtime: docker
+    runtime: node
     
-    # Optional native Node.js deployment fields (uncomment if you change runtime to 'node')
-    # buildCommand: npm install && npm run prisma:generate && npm run build
-    # startCommand: npm start
+    # Native Node.js deployment fields
+    buildCommand: npm install && npm run prisma:generate && npm run build
+    startCommand: npm start
 
     envVars:
       - key: PORT
         value: 3000
       - key: NODE_ENV
         value: production
+      - key: NODE_VERSION
+        value: 18
       
       # Database and external integrations (values should be filled in the Render dashboard)
       - key: DATABASE_URL
         sync: false
+      - key: CHAT_DATABASE_URL
+        sync: false
       - key: UPSTASH_REDIS_REST_URL
         sync: false
       - key: CLIENT_URL
+        sync: false
+      
+      # Cloudinary integrations for image/media uploading
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: CHAT_CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CHAT_CLOUDINARY_API_SECRET
         sync: false
       
       # JWT Authentication configurations
