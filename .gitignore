@@ -119,3 +119,6 @@ public
 # Prisma
 # Ignore generated Prisma client if it's placed outside node_modules
 # prisma/client
+
+# Custom generated Prisma clients
+src/modules/*/db/client/

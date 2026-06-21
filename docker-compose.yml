@@ -5,11 +5,10 @@ services:
     build: .
     ports:
       - "3000:3000"
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - DATABASE_URL=${DATABASE_URL}
-      - UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL}
-      - JWT_SECRET=${JWT_SECRET}
     restart: unless-stopped
     # If not using Neon/Upstash, you'd add postgres/redis services here
