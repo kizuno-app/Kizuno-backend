@@ -18,9 +18,13 @@ app.use(cors({
     
     // Normalize origins by stripping trailing slashes for robust comparison
     const normalizedOrigin = origin.replace(/\/$/, '');
+    
+    // Allow localhost/127.0.0.1 (any port) for developer convenience
+    const isLocalhost = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(normalizedOrigin);
+    
     const allowed = config.allowedOrigins.map(o => o.replace(/\/$/, ''));
     
-    if (allowed.includes(normalizedOrigin)) {
+    if (isLocalhost || allowed.includes(normalizedOrigin)) {
       return callback(null, true);
     }
     
