@@ -60,15 +60,13 @@ fi
 echo ""
 
 # ── Step 3: Install dependencies ────────────────────────────────────────────
-echo -e "${YELLOW}[3/6] Installing dependencies (npm ci)...${NC}"
+echo -e "${YELLOW}[3/6] Installing dependencies (including devDependencies for build)...${NC}"
 if [ -f package-lock.json ]; then
-    npm ci --omit=dev 2>&1 | tail -5
+    npm ci --include=dev 2>&1 | tail -5
 else
     echo -e "  ${YELLOW}No package-lock.json found, running npm install...${NC}"
-    npm install --omit=dev 2>&1 | tail -5
+    npm install --include=dev 2>&1 | tail -5
 fi
-# Also install dev dependencies needed for build (typescript, ts-node, @types)
-npm install --save-dev typescript ts-node @types/node @types/express @types/cors @types/jsonwebtoken @types/bcryptjs @types/multer 2>&1 | tail -3
 echo -e "  ${GREEN}Dependencies installed ✓${NC}"
 echo ""
 
@@ -83,6 +81,12 @@ echo -e "${YELLOW}[5/6] Building TypeScript → JavaScript...${NC}"
 npx tsc 2>&1
 node copy-clients.js 2>&1
 echo -e "  ${GREEN}Build complete ✓${NC}"
+echo ""
+
+# ── Step 5.5: Prune development dependencies for production ─────────────────
+echo -e "${YELLOW}Pruning development dependencies...${NC}"
+npm prune --omit=dev 2>&1 | tail -5
+echo -e "  ${GREEN}Pruning complete ✓${NC}"
 echo ""
 
 # ── Step 6: Start server ────────────────────────────────────────────────────
