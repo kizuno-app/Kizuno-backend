@@ -15,11 +15,17 @@ app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (mobile apps, curl, server-to-server)
     if (!origin) return callback(null, true);
-    if (config.allowedOrigins.includes(origin)) {
+    
+    // Normalize origins by stripping trailing slashes for robust comparison
+    const normalizedOrigin = origin.replace(/\/$/, '');
+    const allowed = config.allowedOrigins.map(o => o.replace(/\/$/, ''));
+    
+    if (allowed.includes(normalizedOrigin)) {
       return callback(null, true);
     }
-    console.warn(`[CORS] Blocked request from origin: ${origin}`);
-    return callback(new Error('Not allowed by CORS'));
+    
+    console.warn(`[CORS] Blocked request. Origin: "${origin}" is not in allowed origins: ${JSON.stringify(config.allowedOrigins)}`);
+    return callback(new Error(`Not allowed by CORS. Origin: ${origin}`));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
