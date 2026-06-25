@@ -7,8 +7,15 @@ export class PostController {
   static async createPost(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.user?.userId;
-      const organizationId = req.user?.organizationId;
       if (!userId) throw { statusCode: 401, message: 'Unauthorized' };
+
+      let organizationId = req.user?.organizationId;
+      if (!organizationId) {
+        const profile = await UserService.getProfile(userId).catch(() => null);
+        if (profile?.organizationId) {
+          organizationId = profile.organizationId;
+        }
+      }
 
       const parsedBody = CreatePostDto.parse(req.body);
       const post = await PostService.createPost(userId, parsedBody, organizationId);
@@ -138,8 +145,15 @@ export class PostController {
   static async repost(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.user?.userId;
-      const organizationId = req.user?.organizationId;
       if (!userId) throw { statusCode: 401, message: 'Unauthorized' };
+
+      let organizationId = req.user?.organizationId;
+      if (!organizationId) {
+        const profile = await UserService.getProfile(userId).catch(() => null);
+        if (profile?.organizationId) {
+          organizationId = profile.organizationId;
+        }
+      }
 
       const postId = req.params.postId as string;
       if (!postId) throw { statusCode: 400, message: 'Post ID is required' };
@@ -154,8 +168,15 @@ export class PostController {
   static async quotePost(req: Request, res: Response, next: NextFunction) {
     try {
       const userId = req.user?.userId;
-      const organizationId = req.user?.organizationId;
       if (!userId) throw { statusCode: 401, message: 'Unauthorized' };
+
+      let organizationId = req.user?.organizationId;
+      if (!organizationId) {
+        const profile = await UserService.getProfile(userId).catch(() => null);
+        if (profile?.organizationId) {
+          organizationId = profile.organizationId;
+        }
+      }
 
       const postId = req.params.postId as string;
       if (!postId) throw { statusCode: 400, message: 'Post ID is required' };

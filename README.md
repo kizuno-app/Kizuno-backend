@@ -48,3 +48,40 @@ Ensure you have pushed all your latest configuration changes to your GitHub repo
 ### Step 3: Verify Deployment
 * Render will automatically spin up a native Node.js 18 environment, download dependencies, run the Prisma generation, compile the TypeScript files, and start the production web service.
 * Once the deployment status turns green (**Live**), your server is active and accessible via the generated Render URL on port `3000`.
+
+## Azure VM Deployment
+
+This backend includes a `deploy.sh` script designed to automate deployment on an Ubuntu 22.04+ Azure VM.
+
+### Steps to Deploy
+
+1. **Clone the repository on the Azure VM**:
+   ```bash
+   git clone <your-repo-url> campus-connect-backend
+   cd campus-connect-backend
+   ```
+
+2. **Configure Environment Variables**:
+   Copy `.env.example` to `.env` and fill in the required variables (DATABASE_URL, JWT_SECRET, etc.):
+   ```bash
+   cp .env.example .env
+   nano .env
+   ```
+
+3. **Run the deployment script**:
+   ```bash
+   bash deploy.sh
+   ```
+   This script will verify Node.js, install production dependencies, generate all Prisma clients, compile the TypeScript code, and prepare the build.
+
+4. **Run in the background using PM2**:
+   ```bash
+   sudo npm install -g pm2
+   pm2 start dist/server.js --name campus-connect-backend --env production
+   pm2 save
+   pm2 startup
+   ```
+
+5. **Firewall / Network Rules**:
+   Ensure you open port `5000` (or your configured `PORT`) in your Azure Network Security Group (NSG) to allow inbound traffic.
+

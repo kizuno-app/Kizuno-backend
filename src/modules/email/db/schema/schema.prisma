@@ -8,6 +8,7 @@ generator client {
   provider        = "prisma-client-js"
   previewFeatures = ["multiSchema"]
   output          = "../client"
+  binaryTargets   = ["native", "debian-openssl-3.0.x", "debian-openssl-1.1.x"]
 }
 
 model EmailLog {

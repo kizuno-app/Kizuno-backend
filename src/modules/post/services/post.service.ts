@@ -20,7 +20,7 @@ export class PostService {
         content: data.content,
         media: data.media || [],
         visibility: data.visibility || 'PUBLIC',
-        organizationId: data.visibility === 'ORGANIZATION_ONLY' ? organizationId : null,
+        organizationId: organizationId || null,
       },
     });
 
@@ -227,7 +227,7 @@ export class PostService {
         repostOfId: targetId,
         isQuote: false,
         visibility: originalPost.visibility,
-        organizationId: originalPost.visibility === 'ORGANIZATION_ONLY' ? organizationId : null,
+        organizationId: organizationId || null,
       },
     });
 
@@ -260,7 +260,7 @@ export class PostService {
         repostOfId,
         isQuote: true,
         visibility: data.visibility || 'PUBLIC',
-        organizationId: data.visibility === 'ORGANIZATION_ONLY' ? organizationId : null,
+        organizationId: organizationId || null,
       },
     });
 

@@ -2,12 +2,29 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { errorHandler } from './middlewares/errorHandler';
+import { config } from './shared/config';
 
 const app: Application = express();
 
+// Trust proxy (for Azure load balancer / reverse proxy)
+app.set('trust proxy', 1);
+
 // Middlewares
 app.use(helmet());
-app.use(cors());
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, server-to-server)
+    if (!origin) return callback(null, true);
+    if (config.allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    console.warn(`[CORS] Blocked request from origin: ${origin}`);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

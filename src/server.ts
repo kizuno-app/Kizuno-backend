@@ -16,7 +16,11 @@ import { registrationCleanupQueue } from './modules/organization/queue/registrat
 
 const server = createServer(app);
 const io = new Server(server, {
-  cors: { origin: config.clientUrl }
+  cors: {
+    origin: config.allowedOrigins,
+    methods: ['GET', 'POST'],
+    credentials: true,
+  }
 });
 
 // Track online users mapping userId -> Set of socketIds
@@ -97,8 +101,9 @@ warmUpDatabase()
     console.error('[Server] Critical error during DB warmup:', err);
   })
   .finally(() => {
-    server.listen(config.port, () => {
-      console.log(`[Server] Server is running on port ${config.port} in ${config.nodeEnv} mode`);
+    server.listen(Number(config.port), config.host as string, () => {
+      console.log(`[Server] Server is running on ${config.host}:${config.port} in ${config.nodeEnv} mode`);
+      console.log(`[Server] Allowed CORS origins: ${config.allowedOrigins.join(', ')}`);
       
       // Schedule the repeatable cleanup job to run every hour
       registrationCleanupQueue.add(
@@ -118,11 +123,29 @@ warmUpDatabase()
   });
 
 // Graceful shutdown
-process.on('SIGTERM', () => {
-  console.log('SIGTERM signal received: closing HTTP server');
+function gracefulShutdown(signal: string) {
+  console.log(`${signal} signal received: closing HTTP server`);
   server.close(() => {
     console.log('HTTP server closed');
+    process.exit(0);
   });
-});
-// Hot reload trigger for environment variables
+  // Force exit after 10 seconds if graceful shutdown hangs
+  setTimeout(() => {
+    console.error('Forced shutdown after timeout');
+    process.exit(1);
+  }, 10000);
+}
 
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
+process.on('SIGINT', () => gracefulShutdown('SIGINT'));
+
+// Prevent crashes from unhandled errors
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[Server] Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('[Server] Uncaught Exception:', error);
+  // Give the server a moment to finish pending requests before exiting
+  gracefulShutdown('uncaughtException');
+});

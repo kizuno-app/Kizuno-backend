@@ -2,8 +2,22 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+/**
+ * Parse allowed origins from ALLOWED_ORIGINS env var (comma-separated)
+ * Falls back to CLIENT_URL if ALLOWED_ORIGINS is not set
+ */
+function parseAllowedOrigins(): string[] {
+  const allowedOrigins = process.env.ALLOWED_ORIGINS;
+  if (allowedOrigins) {
+    return allowedOrigins.split(',').map(origin => origin.trim()).filter(Boolean);
+  }
+  const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
+  return [clientUrl];
+}
+
 export const config = {
   port: process.env.PORT || 3000,
+  host: process.env.HOST || '0.0.0.0',
   nodeEnv: process.env.NODE_ENV || 'development',
   database: {
     url: process.env.DATABASE_URL || '',
@@ -18,6 +32,7 @@ export const config = {
     refreshExpiresIn: process.env.JWT_REFRESH_EXPIRES_IN || '7d',
   },
   clientUrl: process.env.CLIENT_URL || 'http://localhost:3000',
+  allowedOrigins: parseAllowedOrigins(),
   email: {
     resendApiKey: process.env.RESEND_API_KEY || '',
     mailReplyTo: process.env.MAIL_REPLY_TO || 'support@kizuna.app',

@@ -11,6 +11,7 @@ interface FeedPostContext {
   likes: number;
   commentsCount: number;
   shares: number;
+  organizationId?: string | null;
 }
 
 export class FeedService {
@@ -44,13 +45,19 @@ export class FeedService {
     return 20; 
   }
 
-  static async calculateFinalScore(viewerId: string, ctx: FeedPostContext, following: any[]): Promise<number> {
+  static async calculateFinalScore(viewerId: string, ctx: FeedPostContext, following: any[], viewerOrgId?: string): Promise<number> {
     const hoursOld = (Date.now() - new Date(ctx.createdAt).getTime()) / (1000 * 60 * 60);
     
     const freshness = this.calculateFreshness(hoursOld);
     const engagement = this.calculateEngagement(ctx);
     const velocity = this.calculateVelocity(engagement, hoursOld);
-    const socialScore = await this.calculateSocialScore(ctx.authorId, viewerId, following);
+    
+    let socialScore = await this.calculateSocialScore(ctx.authorId, viewerId, following);
+
+    // Boost social score if the post belongs to the viewer's organization network
+    if (viewerOrgId && ctx.organizationId === viewerOrgId) {
+      socialScore += 150;
+    }
     
     const networkEffect = engagement; // simplified
 
@@ -88,11 +95,13 @@ export class FeedService {
     // Global score ignores social proximity
     const globalScore = (0.4 * freshness) + (0.4 * velocity) + (0.2 * engagement);
 
-    if (post.visibility === 'ORGANIZATION_ONLY') {
+    if (post.organizationId) {
       const orgTrendingKey = `feed:org:${post.organizationId}`; // Use the same org cache for now or trending-specific one
       await redisClient.zadd(orgTrendingKey, globalScore, post.id);
       await redisClient.zremrangebyrank(orgTrendingKey, 0, -251);
+    }
 
+    if (post.visibility === 'ORGANIZATION_ONLY') {
       // Virality Check - Breakout
       const VIRALITY_THRESHOLD = 50; // Set to 50 for testing, usually 1000+
       
@@ -159,8 +168,9 @@ export class FeedService {
           createdAt: p.createdAt,
           likes: p.likes,
           commentsCount: p.commentsCount,
-          shares: p.shares
-        }, following);
+          shares: p.shares,
+          organizationId: p.organizationId || null
+        }, following, organizationId);
         return { post: p, score };
       })
     );
@@ -239,18 +249,22 @@ export class FeedService {
   }
 
   static async handleNewPost(post: any) {
-    if (post.visibility === 'ORGANIZATION_ONLY') {
+    if (post.organizationId) {
       const score = await this.calculateFinalScore(post.userId, {
         postId: post.id,
         authorId: post.userId,
         createdAt: post.createdAt,
         likes: post.likes,
         commentsCount: post.commentsCount,
-        shares: post.shares
-      }, []);
+        shares: post.shares,
+        organizationId: post.organizationId
+      }, [], post.organizationId);
       const key = `feed:org:${post.organizationId}`;
       await redisClient.zadd(key, score, post.id);
       await redisClient.zremrangebyrank(key, 0, -251);
+    }
+
+    if (post.visibility === 'ORGANIZATION_ONLY') {
       return;
     }
 
@@ -258,14 +272,23 @@ export class FeedService {
     const followers = await ConnectionService.getFollowers(post.userId);
     
     for (const f of followers) {
+      let followerOrgId: string | undefined = undefined;
+      try {
+        const profile = await UserService.getProfile(f.followerId);
+        if (profile?.organizationId) {
+          followerOrgId = profile.organizationId;
+        }
+      } catch {}
+
       const score = await this.calculateFinalScore(f.followerId, {
         postId: post.id,
         authorId: post.userId,
         createdAt: post.createdAt,
         likes: post.likes,
         commentsCount: post.commentsCount,
-        shares: post.shares
-      }, [{ followingId: post.userId }]);
+        shares: post.shares,
+        organizationId: post.organizationId || null
+      }, [{ followingId: post.userId }], followerOrgId);
       await this.pushToFeed(f.followerId, post.id, score);
     }
 
