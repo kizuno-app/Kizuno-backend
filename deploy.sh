@@ -48,13 +48,15 @@ if [ ! -f .env ]; then
 fi
 echo -e "  ${GREEN}.env file found ✓${NC}"
 
-# Verify critical env vars
-source <(grep -v '^#' .env | grep -v '^\s*$' | sed 's/^/export /')
-if [ -z "$DATABASE_URL" ]; then
-    echo -e "  ${RED}ERROR: DATABASE_URL is not set in .env${NC}"
+# Verify critical env vars without sourcing (to avoid syntax errors from unquoted special characters)
+DB_URL_VAL=$(grep -E "^\s*DATABASE_URL\s*=" .env | cut -d'=' -f2- | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '"' | tr -d "'")
+JWT_SECRET_VAL=$(grep -E "^\s*JWT_SECRET\s*=" .env | cut -d'=' -f2- | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' | tr -d '"' | tr -d "'")
+
+if [ -z "$DB_URL_VAL" ]; then
+    echo -e "  ${RED}ERROR: DATABASE_URL is not set or empty in .env${NC}"
     exit 1
 fi
-if [ -z "$JWT_SECRET" ] || [ "$JWT_SECRET" = "super-secret-key" ] || [ "$JWT_SECRET" = "generate-a-strong-secret-here" ]; then
+if [ -z "$JWT_SECRET_VAL" ] || [ "$JWT_SECRET_VAL" = "super-secret-key" ] || [ "$JWT_SECRET_VAL" = "generate-a-strong-secret-here" ]; then
     echo -e "  ${YELLOW}WARNING: JWT_SECRET should be a strong random secret for production!${NC}"
 fi
 echo ""
