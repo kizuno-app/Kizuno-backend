@@ -105,20 +105,29 @@ warmUpDatabase()
       console.log(`[Server] Server is running on ${config.host}:${config.port} in ${config.nodeEnv} mode`);
       console.log(`[Server] Allowed CORS origins: ${config.allowedOrigins.join(', ')}`);
       
-      // Schedule the repeatable cleanup job to run every hour
-      registrationCleanupQueue.add(
-        'check-incomplete-registrations',
-        {},
-        {
-          repeat: {
-            pattern: '0 * * * *', // Every hour
-          },
-        }
-      ).then(() => {
-        console.log('[Server] Successfully scheduled hourly registration cleanup job');
-      }).catch((err) => {
-        console.error('[Server] Failed to schedule registration cleanup job:', err);
-      });
+      // Check if the repeatable cleanup job is already scheduled to avoid duplicate writes on every nodemon restart
+      registrationCleanupQueue.getRepeatableJobs()
+        .then((jobs) => {
+          const exists = jobs.some(j => j.name === 'check-incomplete-registrations');
+          if (!exists) {
+            return registrationCleanupQueue.add(
+              'check-incomplete-registrations',
+              {},
+              {
+                repeat: {
+                  pattern: '0 * * * *', // Every hour
+                },
+              }
+            ).then(() => {
+              console.log('[Server] Successfully scheduled hourly registration cleanup job');
+            });
+          } else {
+            console.log('[Server] Hourly registration cleanup job is already scheduled');
+          }
+        })
+        .catch((err) => {
+          console.error('[Server] Failed to check/schedule registration cleanup job:', err);
+        });
     });
   });
 

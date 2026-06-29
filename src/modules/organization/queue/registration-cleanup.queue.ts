@@ -100,6 +100,9 @@ export const registrationCleanupWorker = new Worker(
   },
   {
     connection: createQueueConnection() as any,
+    drainDelay: 30, // Poll every 30 seconds instead of 5 when queue is empty to conserve Upstash commands
+    stalledInterval: 300000, // Check for stalled jobs every 5 minutes instead of 30s to reduce commands
+    lockDuration: 300000, // Extend lock duration to match stalled interval
   }
 );
 
