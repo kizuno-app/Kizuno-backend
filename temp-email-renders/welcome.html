@@ -1,20 +1,4 @@
-/**
- * Base Email Template
- * Shared layout with Kizuna branding — header, footer, social placeholders.
- * All templates wrap their content inside this base layout.
- *
- * Brand: KIZUNA
- * Theme: Deep Indigo #1e1b4b, Royal Purple #7c3aed, Electric Blue #3b82f6
- */
-
-export interface BaseTemplateOptions {
-  previewText?: string;
-}
-
-export function baseTemplate(bodyContent: string, options: BaseTemplateOptions = {}): string {
-  const previewText = options.previewText || '';
-
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
   <meta charset="UTF-8">
@@ -60,7 +44,7 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
 </head>
 <body style="margin: 0; padding: 0; background-color: #f6f5fa;">
   <!-- Preview text (hidden) -->
-  ${previewText ? `<div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">${previewText}</div>` : ''}
+  <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">Welcome to Kizuna, Aahan Arya! Your account is verified.</div>
   
   <!-- Outer wrapper -->
   <table role="presentation" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color: #f6f5fa; min-height: 100vh;" class="email-body">
@@ -97,7 +81,103 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
           <!-- Body Content -->
           <tr>
             <td class="email-card" style="background-color: #ffffff; padding: 40px 48px;">
-              ${bodyContent}
+              
+    <!-- SVG Welcome Illustration -->
+    <svg width="120" height="100" viewBox="0 0 120 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 0 auto 24px auto;">
+      <rect x="5" y="5" width="110" height="90" fill="#faf9fc" stroke="#edeaf4" stroke-width="2" />
+      <circle cx="60" cy="50" r="32" fill="#f3f0ff" />
+      <!-- Overlapping chat bubbles representing Kizuna -->
+      <rect x="40" y="32" width="34" height="24" fill="#ffffff" stroke="#6366f1" stroke-width="2" />
+      <path d="M46 56L43 61L50 56H46Z" fill="#ffffff" stroke="#6366f1" stroke-width="2" stroke-linejoin="round" />
+      
+      <rect x="58" y="44" width="34" height="24" fill="#ffffff" stroke="#818cf8" stroke-width="2" />
+      <path d="M78 68L81 73L74 68H78Z" fill="#ffffff" stroke="#818cf8" stroke-width="2" stroke-linejoin="round" />
+      <!-- Stars -->
+      <path d="M98 25L99 28L102 29L99 30L98 33L97 30L94 29L97 28L98 25Z" fill="#a78bfa" />
+      <path d="M22 62L23 65L26 66L23 67L22 70L21 67L18 66L21 65L22 62Z" fill="#818cf8" />
+    </svg>
+
+    <!-- Greeting -->
+    <h2 class="email-text" style="margin: 0 0 10px 0; font-size: 22px; font-weight: 800; color: #1b1833; text-align: center; letter-spacing: -0.5px;">
+      Welcome to Kizuna!
+    </h2>
+    <p class="email-text-secondary" style="margin: 0 0 28px 0; font-size: 15px; color: #575366; line-height: 1.7; text-align: center;">
+      Hey <strong style="color: #6366f1;">Aahan Arya</strong>, we're thrilled to have you! Your account is verified and you're all set to start your journey on Kizuna.
+    </p>
+
+    <hr class="email-divider" style="border: none; border-top: 1px solid #f1f0f5; margin: 28px 0;">
+
+    <!-- Feature cards -->
+    <p class="email-text" style="margin: 0 0 20px 0; font-size: 15px; font-weight: 700; color: #1b1833;">
+      Here's what you can do next:
+    </p>
+
+    <!-- Card 1: Complete Profile -->
+    <div style="background-color: #faf9fc; border: 1px solid #edeaf4; border-radius: 0px; padding: 20px; margin-bottom: 12px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="52" valign="top">
+            <div style="background-color: #f3f0ff; border: 1px solid #e2dbfc; border-radius: 0px; width: 38px; height: 38px; line-height: 38px; text-align: center; font-size: 18px;">
+              👤
+            </div>
+          </td>
+          <td>
+            <p style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700; color: #6366f1;">Complete Your Profile</p>
+            <p style="margin: 0; font-size: 13px; color: #575366; line-height: 1.5;">Add your photo, bio, college, and interests to stand out in the community.</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Card 2: Discover -->
+    <div style="background-color: #faf9fc; border: 1px solid #edeaf4; border-radius: 0px; padding: 20px; margin-bottom: 12px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="52" valign="top">
+            <div style="background-color: #f3f0ff; border: 1px solid #e2dbfc; border-radius: 0px; width: 38px; height: 38px; line-height: 38px; text-align: center; font-size: 18px;">
+              🔍
+            </div>
+          </td>
+          <td>
+            <p style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700; color: #6366f1;">Discover Communities</p>
+            <p style="margin: 0; font-size: 13px; color: #575366; line-height: 1.5;">Find and join organizations, clubs, and groups that match your interests.</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Card 3: Connect -->
+    <div style="background-color: #faf9fc; border: 1px solid #edeaf4; border-radius: 0px; padding: 20px; margin-bottom: 28px;">
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+        <tr>
+          <td width="52" valign="top">
+            <div style="background-color: #f3f0ff; border: 1px solid #e2dbfc; border-radius: 0px; width: 38px; height: 38px; line-height: 38px; text-align: center; font-size: 18px;">
+              🤝
+            </div>
+          </td>
+          <td>
+            <p style="margin: 0 0 4px 0; font-size: 14px; font-weight: 700; color: #6366f1;">Start Connecting</p>
+            <p style="margin: 0; font-size: 13px; color: #575366; line-height: 1.5;">Follow people, share your thoughts, and build meaningful connections.</p>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- CTA -->
+    <div style="margin-top: 32px;">
+      
+    <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
+      <tr>
+        <td align="center" style="border-radius: 0px; background-color: #6366f1; box-shadow: 0 4px 10px rgba(99, 102, 241, 0.15);">
+          <a href="http://localhost:3000" target="_blank" class="cta-button" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 700; color: #ffffff; text-decoration: none; border-radius: 0px; letter-spacing: 0.3px;">
+            Get Started
+          </a>
+        </td>
+      </tr>
+    </table>
+  
+    </div>
+  
             </td>
           </tr>
 
@@ -167,7 +247,7 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
                 <tr>
                   <td align="center">
                     <p style="margin: 0; font-size: 11px; color: #b2b5c7; font-weight: 500;">
-                      © ${new Date().getFullYear()} Kizuna. All rights reserved.
+                      © 2026 Kizuna. All rights reserved.
                     </p>
                   </td>
                 </tr>
@@ -180,102 +260,4 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
     </tr>
   </table>
 </body>
-</html>`;
-}
-
-/**
- * Helper: Generate a CTA button
- */
-export function ctaButton(text: string, url: string, variant: 'primary' | 'secondary' = 'primary'): string {
-  const bgColor = variant === 'primary'
-    ? 'background-color: #6366f1;'
-    : 'background-color: #4b5563;';
-
-  return `
-    <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
-      <tr>
-        <td align="center" style="border-radius: 0px; ${bgColor} box-shadow: 0 4px 10px rgba(99, 102, 241, 0.15);">
-          <a href="${url}" target="_blank" class="cta-button" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 700; color: #ffffff; text-decoration: none; border-radius: 0px; letter-spacing: 0.3px;">
-            ${text}
-          </a>
-        </td>
-      </tr>
-    </table>
-  `;
-}
-
-/**
- * Helper: Section divider
- */
-export function divider(): string {
-  return `<hr class="email-divider" style="border: none; border-top: 1px solid #f1f0f5; margin: 28px 0;">`;
-}
-
-/**
- * Helper: Info row with label and value (for security alerts, device info, etc.)
- */
-export function infoRow(label: string, value: string): string {
-  return `
-    <tr>
-      <td style="padding: 8px 0; border-bottom: 1px solid #f6f5fa;">
-        <span class="email-text-secondary" style="font-size: 11px; color: #8c899c; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">${label}</span>
-        <br>
-        <span class="email-text" style="font-size: 14px; color: #2e2a47; font-weight: 600; display: inline-block; margin-top: 2px;">${value}</span>
-      </td>
-    </tr>
-  `;
-}
-
-/**
- * Helper: Custom visual OTP code grid layout
- */
-export function verificationCodeLayout(code: string): string {
-  const digits = code.trim().split('');
-  const cells = digits.map(digit => `
-    <td align="center" style="width: 44px; height: 50px; background-color: #faf9fc; border: 1px solid #e1dfec; border-radius: 0px; font-size: 24px; font-weight: 800; color: #6366f1; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;">
-      ${digit}
-    </td>
-  `).join('\n');
-
-  return `
-    <table role="presentation" cellpadding="0" cellspacing="6" style="margin: 20px auto; border-collapse: separate;">
-      <tr>
-        ${cells}
-      </tr>
-    </table>
-  `;
-}
-
-/**
- * Helper: Visual status badge component
- */
-export function statusBadge(status: string, type: 'pending' | 'success' | 'warning' | 'danger'): string {
-  let bg = '#f5f3ff';
-  let border = '#e5e0fa';
-  let text = '#6366f1';
-  
-  if (type === 'success') {
-    bg = '#f0fdf4';
-    border = '#dcfce7';
-    text = '#15803d';
-  } else if (type === 'warning') {
-    bg = '#fffbeb';
-    border = '#fef3c7';
-    text = '#b45309';
-  } else if (type === 'danger') {
-    bg = '#fef2f2';
-    border = '#fecaca';
-    text = '#b91c1c';
-  }
-
-  return `
-    <div style="background-color: ${bg}; border: 1px solid ${border}; border-radius: 0px; padding: 20px; text-align: center; margin: 20px 0;">
-      <p style="margin: 0 0 6px 0; font-size: 11px; font-weight: 700; color: #8c899c; text-transform: uppercase; letter-spacing: 1px;">
-        Status
-      </p>
-      <p style="margin: 0; font-size: 18px; font-weight: 800; color: ${text};">
-        ${status}
-      </p>
-    </div>
-  `;
-}
+</html>

@@ -1,20 +1,4 @@
-/**
- * Base Email Template
- * Shared layout with Kizuna branding — header, footer, social placeholders.
- * All templates wrap their content inside this base layout.
- *
- * Brand: KIZUNA
- * Theme: Deep Indigo #1e1b4b, Royal Purple #7c3aed, Electric Blue #3b82f6
- */
-
-export interface BaseTemplateOptions {
-  previewText?: string;
-}
-
-export function baseTemplate(bodyContent: string, options: BaseTemplateOptions = {}): string {
-  const previewText = options.previewText || '';
-
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
   <meta charset="UTF-8">
@@ -60,7 +44,7 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
 </head>
 <body style="margin: 0; padding: 0; background-color: #f6f5fa;">
   <!-- Preview text (hidden) -->
-  ${previewText ? `<div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">${previewText}</div>` : ''}
+  <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">Security alert: New Login Device Detected</div>
   
   <!-- Outer wrapper -->
   <table role="presentation" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color: #f6f5fa; min-height: 100vh;" class="email-body">
@@ -97,7 +81,87 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
           <!-- Body Content -->
           <tr>
             <td class="email-card" style="background-color: #ffffff; padding: 40px 48px;">
-              ${bodyContent}
+              
+    <!-- SVG Security Illustration -->
+    <svg width="100" height="100" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 0 auto 24px auto;">
+      <rect x="10" y="10" width="100" height="100" fill="#faf9fc" stroke="#edeaf4" stroke-width="2" />
+      <path d="M60 25C75 25 85 30 85 30V62C85 80 60 92 60 92C60 92 35 80 35 62V30C35 30 45 25 60 25Z" fill="#f5f3ff" stroke="#6366f1" stroke-width="2.5" stroke-linejoin="round" />
+      <path d="M52 58L58 64L68 50" stroke="#6366f1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      <circle cx="28" cy="40" r="3" fill="#818cf8" />
+      <circle cx="92" cy="76" r="4" fill="#a78bfa" />
+    </svg>
+
+    <!-- Title -->
+    <h2 class="email-text" style="margin: 0 0 10px 0; font-size: 22px; font-weight: 800; color: #1b1833; text-align: center; letter-spacing: -0.5px;">
+      New Login Device Detected
+    </h2>
+    <p class="email-text-secondary" style="margin: 0 0 24px 0; font-size: 14px; color: #575366; line-height: 1.6; text-align: center;">
+      Hi <strong style="color: #1b1833;">Aahan Arya</strong>, your account was accessed from a new device.
+    </p>
+
+    <hr class="email-divider" style="border: none; border-top: 1px solid #f1f0f5; margin: 28px 0;">
+
+    <!-- Details card (Rectangular design) -->
+    <div style="background-color: #faf9fc; border: 1px solid #edeaf4; border-radius: 0px; padding: 24px;">
+      <p style="margin: 0 0 16px 0; font-size: 11px; font-weight: 700; color: #8c899c; text-transform: uppercase; letter-spacing: 0.8px;">
+        Activity Details
+      </p>
+      <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+        
+    <tr>
+      <td style="padding: 8px 0; border-bottom: 1px solid #f6f5fa;">
+        <span class="email-text-secondary" style="font-size: 11px; color: #8c899c; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">Time</span>
+        <br>
+        <span class="email-text" style="font-size: 14px; color: #2e2a47; font-weight: 600; display: inline-block; margin-top: 2px;">June 27, 2026 at 11:30 AM IST</span>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <td style="padding: 8px 0; border-bottom: 1px solid #f6f5fa;">
+        <span class="email-text-secondary" style="font-size: 11px; color: #8c899c; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">Device</span>
+        <br>
+        <span class="email-text" style="font-size: 14px; color: #2e2a47; font-weight: 600; display: inline-block; margin-top: 2px;">Apple iPhone 15 Pro</span>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <td style="padding: 8px 0; border-bottom: 1px solid #f6f5fa;">
+        <span class="email-text-secondary" style="font-size: 11px; color: #8c899c; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">Browser</span>
+        <br>
+        <span class="email-text" style="font-size: 14px; color: #2e2a47; font-weight: 600; display: inline-block; margin-top: 2px;">Mobile Safari 17.2</span>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <td style="padding: 8px 0; border-bottom: 1px solid #f6f5fa;">
+        <span class="email-text-secondary" style="font-size: 11px; color: #8c899c; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">IP Address</span>
+        <br>
+        <span class="email-text" style="font-size: 14px; color: #2e2a47; font-weight: 600; display: inline-block; margin-top: 2px;">192.168.1.45</span>
+      </td>
+    </tr>
+  
+        
+    <tr>
+      <td style="padding: 8px 0; border-bottom: 1px solid #f6f5fa;">
+        <span class="email-text-secondary" style="font-size: 11px; color: #8c899c; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">Location</span>
+        <br>
+        <span class="email-text" style="font-size: 14px; color: #2e2a47; font-weight: 600; display: inline-block; margin-top: 2px;">Mumbai, Maharashtra, India</span>
+      </td>
+    </tr>
+  
+      </table>
+    </div>
+
+    <!-- Warning callout (Bolder design, no clock, no round corners) -->
+    <div style="background-color: #fffbfb; border-left: 4px solid #ef4444; border-top: 1px solid #fde8e8; border-bottom: 1px solid #fde8e8; border-right: 1px solid #fde8e8; padding: 16px 20px; margin-top: 24px; border-radius: 0px;">
+      <p class="email-text-secondary" style="margin: 0; font-size: 13px; color: #b91c1c; line-height: 1.5; font-weight: 600;">
+        If this wasn't you, please <strong>change your password immediately</strong> and contact our support team at <a href="mailto:support@kizuna.app" style="color: #b91c1c; text-decoration: none; font-weight: 700;">support@kizuna.app</a>
+      </p>
+    </div>
+  
             </td>
           </tr>
 
@@ -167,7 +231,7 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
                 <tr>
                   <td align="center">
                     <p style="margin: 0; font-size: 11px; color: #b2b5c7; font-weight: 500;">
-                      © ${new Date().getFullYear()} Kizuna. All rights reserved.
+                      © 2026 Kizuna. All rights reserved.
                     </p>
                   </td>
                 </tr>
@@ -180,102 +244,4 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
     </tr>
   </table>
 </body>
-</html>`;
-}
-
-/**
- * Helper: Generate a CTA button
- */
-export function ctaButton(text: string, url: string, variant: 'primary' | 'secondary' = 'primary'): string {
-  const bgColor = variant === 'primary'
-    ? 'background-color: #6366f1;'
-    : 'background-color: #4b5563;';
-
-  return `
-    <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
-      <tr>
-        <td align="center" style="border-radius: 0px; ${bgColor} box-shadow: 0 4px 10px rgba(99, 102, 241, 0.15);">
-          <a href="${url}" target="_blank" class="cta-button" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 700; color: #ffffff; text-decoration: none; border-radius: 0px; letter-spacing: 0.3px;">
-            ${text}
-          </a>
-        </td>
-      </tr>
-    </table>
-  `;
-}
-
-/**
- * Helper: Section divider
- */
-export function divider(): string {
-  return `<hr class="email-divider" style="border: none; border-top: 1px solid #f1f0f5; margin: 28px 0;">`;
-}
-
-/**
- * Helper: Info row with label and value (for security alerts, device info, etc.)
- */
-export function infoRow(label: string, value: string): string {
-  return `
-    <tr>
-      <td style="padding: 8px 0; border-bottom: 1px solid #f6f5fa;">
-        <span class="email-text-secondary" style="font-size: 11px; color: #8c899c; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">${label}</span>
-        <br>
-        <span class="email-text" style="font-size: 14px; color: #2e2a47; font-weight: 600; display: inline-block; margin-top: 2px;">${value}</span>
-      </td>
-    </tr>
-  `;
-}
-
-/**
- * Helper: Custom visual OTP code grid layout
- */
-export function verificationCodeLayout(code: string): string {
-  const digits = code.trim().split('');
-  const cells = digits.map(digit => `
-    <td align="center" style="width: 44px; height: 50px; background-color: #faf9fc; border: 1px solid #e1dfec; border-radius: 0px; font-size: 24px; font-weight: 800; color: #6366f1; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;">
-      ${digit}
-    </td>
-  `).join('\n');
-
-  return `
-    <table role="presentation" cellpadding="0" cellspacing="6" style="margin: 20px auto; border-collapse: separate;">
-      <tr>
-        ${cells}
-      </tr>
-    </table>
-  `;
-}
-
-/**
- * Helper: Visual status badge component
- */
-export function statusBadge(status: string, type: 'pending' | 'success' | 'warning' | 'danger'): string {
-  let bg = '#f5f3ff';
-  let border = '#e5e0fa';
-  let text = '#6366f1';
-  
-  if (type === 'success') {
-    bg = '#f0fdf4';
-    border = '#dcfce7';
-    text = '#15803d';
-  } else if (type === 'warning') {
-    bg = '#fffbeb';
-    border = '#fef3c7';
-    text = '#b45309';
-  } else if (type === 'danger') {
-    bg = '#fef2f2';
-    border = '#fecaca';
-    text = '#b91c1c';
-  }
-
-  return `
-    <div style="background-color: ${bg}; border: 1px solid ${border}; border-radius: 0px; padding: 20px; text-align: center; margin: 20px 0;">
-      <p style="margin: 0 0 6px 0; font-size: 11px; font-weight: 700; color: #8c899c; text-transform: uppercase; letter-spacing: 1px;">
-        Status
-      </p>
-      <p style="margin: 0; font-size: 18px; font-weight: 800; color: ${text};">
-        ${status}
-      </p>
-    </div>
-  `;
-}
+</html>

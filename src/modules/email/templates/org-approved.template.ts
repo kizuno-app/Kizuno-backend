@@ -1,4 +1,4 @@
-import { baseTemplate, ctaButton, divider } from './base.template';
+import { baseTemplate, ctaButton, divider, statusBadge } from './base.template';
 import { config } from '../../../shared/config';
 
 /**
@@ -10,40 +10,38 @@ export function orgApprovedTemplate(data: { orgName: string; applicantName?: str
   const clientUrl = config.clientUrl;
 
   const body = `
-    <!-- Icon -->
-    <div style="text-align: center; margin-bottom: 20px;">
-      <div style="display: inline-block; font-size: 48px; line-height: 1;">
-        🎊
-      </div>
-    </div>
+    <!-- SVG Onboarding Success Illustration -->
+    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 0 auto 24px auto;">
+      <rect x="5" y="5" width="90" height="90" fill="#faf9fc" stroke="#edeaf4" stroke-width="2" />
+      <circle cx="50" cy="50" r="32" fill="#f0fdf4" />
+      <rect x="36" y="28" width="28" height="38" fill="#ffffff" stroke="#15803d" stroke-width="2" />
+      <rect x="43" y="24" width="14" height="6" fill="#f0fdf4" stroke="#15803d" stroke-width="2" />
+      <path d="M44 48L48 52L56 44" stroke="#15803d" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
 
     <!-- Greeting -->
-    <h2 class="email-text" style="margin: 0 0 8px 0; font-size: 24px; font-weight: 700; color: #1e1b4b; text-align: center;">
+    <h2 class="email-text" style="margin: 0 0 10px 0; font-size: 22px; font-weight: 800; color: #1b1833; text-align: center; letter-spacing: -0.5px;">
       Organization Approved!
     </h2>
-    <p class="email-text-secondary" style="margin: 0 0 24px 0; font-size: 15px; color: #6b7280; line-height: 1.7; text-align: center;">
-      ${greeting}, congratulations! <strong style="color: #4c1d95;">${data.orgName}</strong> is now verified and active on Kizuna.
+    <p class="email-text-secondary" style="margin: 0 0 24px 0; font-size: 14px; color: #575366; line-height: 1.7; text-align: center;">
+      ${greeting}, congratulations! <strong style="color: #6366f1;">${data.orgName}</strong> is now verified and active on Kizuna.
     </p>
 
     ${divider()}
 
-    <!-- Success card -->
-    <div style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 1px solid #bbf7d0; border-radius: 12px; padding: 24px; text-align: center;">
-      <p style="margin: 0 0 8px 0; font-size: 13px; font-weight: 600; color: #166534; text-transform: uppercase; letter-spacing: 1px;">
-        Status
-      </p>
-      <p style="margin: 0; font-size: 20px; font-weight: 800; color: #15803d;">
-        ✅ Verified & Active
-      </p>
-    </div>
+    <!-- Status Badge (No emoji) -->
+    ${statusBadge('Verified & Active', 'success')}
 
-    <p class="email-text-secondary" style="margin: 24px 0 24px 0; font-size: 14px; color: #6b7280; line-height: 1.7;">
+    <p class="email-text-secondary" style="margin: 24px 0 24px 0; font-size: 14px; color: #575366; line-height: 1.7;">
       Your organization can now create posts, manage members, and engage with the Kizuna community. Welcome aboard!
     </p>
 
     <!-- CTA -->
-    ${ctaButton('Go to Dashboard', clientUrl)}
+    <div style="margin-top: 32px;">
+      ${ctaButton('Go to Dashboard', clientUrl)}
+    </div>
   `;
 
   return baseTemplate(body, { previewText: `${data.orgName} has been approved on Kizuna!` });
 }
+

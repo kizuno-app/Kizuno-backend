@@ -7,10 +7,14 @@ class RedisClient {
 
   private constructor() {
     this.client = new Redis(config.redis.url, {
-      maxRetriesPerRequest: 3,
+      maxRetriesPerRequest: null,
+      keepAlive: 10000, // Send TCP keep-alive pings every 10 seconds to prevent idle drops
       retryStrategy(times) {
         const delay = Math.min(times * 200, 5000);
-        console.warn(`[Redis] Reconnecting in ${delay}ms (attempt ${times})`);
+        // Suppress console warnings for the first 3 reconnection attempts since Upstash transparently closes idle connections
+        if (times > 3) {
+          console.warn(`[Redis] Connection lost. Reconnecting in ${delay}ms (attempt ${times})`);
+        }
         return delay;
       },
       reconnectOnError(err) {
@@ -27,9 +31,6 @@ class RedisClient {
       console.log('[Redis] Connected successfully');
     });
 
-    this.client.on('reconnecting', () => {
-      console.log('[Redis] Reconnecting...');
-    });
   }
 
   public static getInstance(): RedisClient {

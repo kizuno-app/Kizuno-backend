@@ -1,5 +1,5 @@
 import { Queue, Worker } from 'bullmq';
-import { queueRedisConnection } from '../../../shared/queue/redis-connection';
+import { createQueueConnection } from '../../../shared/queue/redis-connection';
 import { PrismaClient as OrgPrismaClient } from '../db/client';
 import { PrismaClient as EmailPrismaClient } from '../../email/db/client';
 import { EmailService } from '../../email/services/email.service';
@@ -81,7 +81,7 @@ export class OrgRegistrationCleanupService {
 
 // Initialize the queue
 export const registrationCleanupQueue = new Queue(REGISTRATION_CLEANUP_QUEUE_NAME, {
-  connection: queueRedisConnection as any,
+  connection: createQueueConnection() as any,
 });
 
 // Initialize the worker to process repeatable jobs
@@ -99,7 +99,7 @@ export const registrationCleanupWorker = new Worker(
     }
   },
   {
-    connection: queueRedisConnection as any,
+    connection: createQueueConnection() as any,
   }
 );
 

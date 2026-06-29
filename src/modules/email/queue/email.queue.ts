@@ -1,5 +1,5 @@
 import { Queue, Worker, Job } from 'bullmq';
-import { queueRedisConnection } from '../../../shared/queue/redis-connection';
+import { createQueueConnection } from '../../../shared/queue/redis-connection';
 import { resendProvider } from '../services/resend.provider';
 import { EMAIL_QUEUE_NAME, EMAIL_QUEUE_CONFIG, EmailStatus } from '../constants/email.constants';
 import { EmailJobType } from '../dto/email.dto';
@@ -14,7 +14,7 @@ if (process.env.NODE_ENV !== 'production') globalForPrismaEmail.prismaEmailQueue
  * BullMQ queue for asynchronous email processing with retry, backoff, and DLQ.
  */
 export const emailQueue = new Queue(EMAIL_QUEUE_NAME, {
-  connection: queueRedisConnection as any,
+  connection: createQueueConnection() as any,
   defaultJobOptions: {
     attempts: EMAIL_QUEUE_CONFIG.maxRetries,
     backoff: {
@@ -88,7 +88,7 @@ export const emailWorker = new Worker(
     console.log(`[EmailQueue] Successfully sent email to ${to}. Resend ID: ${result.id}`);
   },
   {
-    connection: queueRedisConnection as any,
+    connection: createQueueConnection() as any,
     concurrency: 5, // Process up to 5 emails concurrently
   }
 );

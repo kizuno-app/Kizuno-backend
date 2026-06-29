@@ -15,6 +15,15 @@ function parseAllowedOrigins(): string[] {
   return [clientUrl];
 }
 
+function parseRedisUrl(): string {
+  let url = process.env.UPSTASH_REDIS_REST_URL || process.env.REDIS_URL || 'redis://localhost:6379';
+  if (url.includes('.upstash.io') && url.startsWith('redis://')) {
+    console.log('[Redis Config] Upstash endpoint detected, converting connection protocol to secure rediss://');
+    url = url.replace(/^redis:/, 'rediss:');
+  }
+  return url;
+}
+
 export const config = {
   port: process.env.PORT || 3000,
   host: process.env.HOST || '0.0.0.0',
@@ -23,7 +32,7 @@ export const config = {
     url: process.env.DATABASE_URL || '',
   },
   redis: {
-    url: process.env.UPSTASH_REDIS_REST_URL || process.env.REDIS_URL || 'redis://localhost:6379',
+    url: parseRedisUrl(),
   },
   jwt: {
     secret: process.env.JWT_SECRET || 'super-secret-fallback-key',

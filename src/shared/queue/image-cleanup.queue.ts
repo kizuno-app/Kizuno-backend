@@ -1,12 +1,12 @@
 import { Queue, Worker } from 'bullmq';
-import { queueRedisConnection } from './redis-connection';
+import { createQueueConnection } from './redis-connection';
 import { extractPublicIdFromUrl, deleteImageFromCloudinary } from '../cloudinary';
 
 export const CLOUDINARY_CLEANUP_QUEUE_NAME = 'cloudinaryCleanupQueue';
 
 // Initialize the queue
 export const cloudinaryCleanupQueue = new Queue(CLOUDINARY_CLEANUP_QUEUE_NAME, {
-  connection: queueRedisConnection as any,
+  connection: createQueueConnection() as any,
 });
 
 // Initialize the worker to process the queue
@@ -37,7 +37,7 @@ export const cloudinaryCleanupWorker = new Worker(
     }
   },
   {
-    connection: queueRedisConnection as any,
+    connection: createQueueConnection() as any,
   }
 );
 

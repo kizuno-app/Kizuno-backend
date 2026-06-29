@@ -1,20 +1,4 @@
-/**
- * Base Email Template
- * Shared layout with Kizuna branding — header, footer, social placeholders.
- * All templates wrap their content inside this base layout.
- *
- * Brand: KIZUNA
- * Theme: Deep Indigo #1e1b4b, Royal Purple #7c3aed, Electric Blue #3b82f6
- */
-
-export interface BaseTemplateOptions {
-  previewText?: string;
-}
-
-export function baseTemplate(bodyContent: string, options: BaseTemplateOptions = {}): string {
-  const previewText = options.previewText || '';
-
-  return `<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
 <head>
   <meta charset="UTF-8">
@@ -60,7 +44,7 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
 </head>
 <body style="margin: 0; padding: 0; background-color: #f6f5fa;">
   <!-- Preview text (hidden) -->
-  ${previewText ? `<div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">${previewText}</div>` : ''}
+  <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">Update on your Aaahan application</div>
   
   <!-- Outer wrapper -->
   <table role="presentation" cellpadding="0" cellspacing="0" width="100%" height="100%" style="background-color: #f6f5fa; min-height: 100vh;" class="email-body">
@@ -97,7 +81,59 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
           <!-- Body Content -->
           <tr>
             <td class="email-card" style="background-color: #ffffff; padding: 40px 48px;">
-              ${bodyContent}
+              
+    <!-- SVG Onboarding Rejection Illustration -->
+    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: block; margin: 0 auto 24px auto;">
+      <rect x="5" y="5" width="90" height="90" fill="#faf9fc" stroke="#edeaf4" stroke-width="2" />
+      <circle cx="50" cy="50" r="32" fill="#fffbeb" />
+      <rect x="36" y="28" width="28" height="38" fill="#ffffff" stroke="#b45309" stroke-width="2" />
+      <rect x="43" y="24" width="14" height="6" fill="#fffbeb" stroke="#b45309" stroke-width="2" />
+      <!-- Draw warning sign inside document -->
+      <line x1="50" y1="40" x2="50" y2="52" stroke="#b45309" stroke-width="2.5" stroke-linecap="round" />
+      <circle cx="50" cy="59" r="1.5" fill="#b45309" />
+    </svg>
+
+    <!-- Greeting -->
+    <h2 class="email-text" style="margin: 0 0 10px 0; font-size: 22px; font-weight: 800; color: #1b1833; text-align: center; letter-spacing: -0.5px;">
+      Application Status Update
+    </h2>
+    <p class="email-text-secondary" style="margin: 0 0 24px 0; font-size: 14px; color: #575366; line-height: 1.7; text-align: center;">
+      Hi Aahan Arya, we've reviewed the application for <strong style="color: #1b1833;">Aaahan</strong>.
+    </p>
+
+    <hr class="email-divider" style="border: none; border-top: 1px solid #f1f0f5; margin: 28px 0;">
+
+    <!-- Status Badge -->
+    
+    <div style="background-color: #fffbeb; border: 1px solid #fef3c7; border-radius: 0px; padding: 20px; text-align: center; margin: 20px 0;">
+      <p style="margin: 0 0 6px 0; font-size: 11px; font-weight: 700; color: #8c899c; text-transform: uppercase; letter-spacing: 1px;">
+        Status
+      </p>
+      <p style="margin: 0; font-size: 18px; font-weight: 800; color: #b45309;">
+        Requires Revision
+      </p>
+    </div>
+  
+
+    
+    <div style="background-color: #faf9fc; border-left: 4px solid #f59e0b; border-top: 1px solid #edeaf4; border-bottom: 1px solid #edeaf4; border-right: 1px solid #edeaf4; padding: 20px; margin-top: 20px; border-radius: 0px;">
+      <p style="margin: 0 0 8px 0; font-size: 11px; font-weight: 700; color: #8c899c; text-transform: uppercase; letter-spacing: 0.8px;">
+        Feedback
+      </p>
+      <p style="margin: 0; font-size: 13px; color: #575366; line-height: 1.6;">
+        The proof of registration document uploaded is illegible. Please submit a high-quality scan or photo of your official college organization charter.
+      </p>
+    </div>
+    
+
+    <p class="email-text-secondary" style="margin: 24px 0 0 0; font-size: 14px; color: #575366; line-height: 1.7;">
+      Your application requires revision. Please review the feedback above, make the necessary changes, and resubmit your application. We'd love to have you on Kizuna!
+    </p>
+
+    <p class="email-text-secondary" style="margin: 16px 0 0 0; font-size: 13px; color: #b2b5c7;">
+      If you have questions about this decision, please contact our support team.
+    </p>
+  
             </td>
           </tr>
 
@@ -167,7 +203,7 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
                 <tr>
                   <td align="center">
                     <p style="margin: 0; font-size: 11px; color: #b2b5c7; font-weight: 500;">
-                      © ${new Date().getFullYear()} Kizuna. All rights reserved.
+                      © 2026 Kizuna. All rights reserved.
                     </p>
                   </td>
                 </tr>
@@ -180,102 +216,4 @@ export function baseTemplate(bodyContent: string, options: BaseTemplateOptions =
     </tr>
   </table>
 </body>
-</html>`;
-}
-
-/**
- * Helper: Generate a CTA button
- */
-export function ctaButton(text: string, url: string, variant: 'primary' | 'secondary' = 'primary'): string {
-  const bgColor = variant === 'primary'
-    ? 'background-color: #6366f1;'
-    : 'background-color: #4b5563;';
-
-  return `
-    <table role="presentation" cellpadding="0" cellspacing="0" style="margin: 0 auto;">
-      <tr>
-        <td align="center" style="border-radius: 0px; ${bgColor} box-shadow: 0 4px 10px rgba(99, 102, 241, 0.15);">
-          <a href="${url}" target="_blank" class="cta-button" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 700; color: #ffffff; text-decoration: none; border-radius: 0px; letter-spacing: 0.3px;">
-            ${text}
-          </a>
-        </td>
-      </tr>
-    </table>
-  `;
-}
-
-/**
- * Helper: Section divider
- */
-export function divider(): string {
-  return `<hr class="email-divider" style="border: none; border-top: 1px solid #f1f0f5; margin: 28px 0;">`;
-}
-
-/**
- * Helper: Info row with label and value (for security alerts, device info, etc.)
- */
-export function infoRow(label: string, value: string): string {
-  return `
-    <tr>
-      <td style="padding: 8px 0; border-bottom: 1px solid #f6f5fa;">
-        <span class="email-text-secondary" style="font-size: 11px; color: #8c899c; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px;">${label}</span>
-        <br>
-        <span class="email-text" style="font-size: 14px; color: #2e2a47; font-weight: 600; display: inline-block; margin-top: 2px;">${value}</span>
-      </td>
-    </tr>
-  `;
-}
-
-/**
- * Helper: Custom visual OTP code grid layout
- */
-export function verificationCodeLayout(code: string): string {
-  const digits = code.trim().split('');
-  const cells = digits.map(digit => `
-    <td align="center" style="width: 44px; height: 50px; background-color: #faf9fc; border: 1px solid #e1dfec; border-radius: 0px; font-size: 24px; font-weight: 800; color: #6366f1; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;">
-      ${digit}
-    </td>
-  `).join('\n');
-
-  return `
-    <table role="presentation" cellpadding="0" cellspacing="6" style="margin: 20px auto; border-collapse: separate;">
-      <tr>
-        ${cells}
-      </tr>
-    </table>
-  `;
-}
-
-/**
- * Helper: Visual status badge component
- */
-export function statusBadge(status: string, type: 'pending' | 'success' | 'warning' | 'danger'): string {
-  let bg = '#f5f3ff';
-  let border = '#e5e0fa';
-  let text = '#6366f1';
-  
-  if (type === 'success') {
-    bg = '#f0fdf4';
-    border = '#dcfce7';
-    text = '#15803d';
-  } else if (type === 'warning') {
-    bg = '#fffbeb';
-    border = '#fef3c7';
-    text = '#b45309';
-  } else if (type === 'danger') {
-    bg = '#fef2f2';
-    border = '#fecaca';
-    text = '#b91c1c';
-  }
-
-  return `
-    <div style="background-color: ${bg}; border: 1px solid ${border}; border-radius: 0px; padding: 20px; text-align: center; margin: 20px 0;">
-      <p style="margin: 0 0 6px 0; font-size: 11px; font-weight: 700; color: #8c899c; text-transform: uppercase; letter-spacing: 1px;">
-        Status
-      </p>
-      <p style="margin: 0; font-size: 18px; font-weight: 800; color: ${text};">
-        ${status}
-      </p>
-    </div>
-  `;
-}
+</html>
